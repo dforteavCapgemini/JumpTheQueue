@@ -22,6 +22,7 @@ using Devon4Net.WebAPI.Implementation.Business.RabbitMqManagement.Handlers;
 using Devon4Net.WebAPI.Implementation.Business.TodoManagement.Validators;
 using Devon4Net.WebAPI.Implementation.Domain.Database;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -104,6 +105,7 @@ namespace Devon4Net.WebAPI.Implementation.Configure
         /// <param name="configuration"></param>
         private static void SetupDatabase(ref IServiceCollection services, ref IConfiguration configuration)
         {
+            services.SetupDatabase<JumpTheQueueContext>(configuration, "JumpTheQueue", DatabaseType.SqlServer);
             services.SetupDatabase<TodoContext>(configuration, "Default", DatabaseType.InMemory);
             services.SetupDatabase<EmployeeContext>(configuration, "Employee", DatabaseType.InMemory);
         }

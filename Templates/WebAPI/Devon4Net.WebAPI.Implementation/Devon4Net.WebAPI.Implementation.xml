@@ -958,6 +958,12 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Data.Repositories.VisitorRespository.#ctor(Devon4Net.WebAPI.Implementation.Domain.Database.JumpTheQueueContext,Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Validators.VisitorFluentValidator)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context"></param>
+        </member>
         <member name="T:Devon4Net.WebAPI.Implementation.Domain.Database.EmployeeContext">
             <summary>
             Employee database context definition
@@ -985,6 +991,17 @@
             Model rules definition
             </summary>
             <param name="modelBuilder"></param>
+        </member>
+        <member name="P:Devon4Net.WebAPI.Implementation.Domain.Database.JumpTheQueueContext.Visitors">
+            <summary>
+            Dbset
+            </summary>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Domain.Database.JumpTheQueueContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>
+            Any extra configuration should be here
+            </summary>
+            <param name="optionsBuilder"></param>
         </member>
         <member name="T:Devon4Net.WebAPI.Implementation.Domain.Database.TodoContext">
             <summary>
@@ -1121,6 +1138,34 @@
             <returns></returns>
         </member>
         <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.ITodoRepository.DeleteTodoById(System.Int64)">
+            <summary>
+            DeleteTodoById
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.GetTodo(System.Linq.Expressions.Expression{System.Func{Devon4Net.WebAPI.Implementation.Domain.Entities.Visitor,System.Boolean}})">
+            <summary>
+            
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.GetTodoById(System.Int64)">
+            <summary>
+            GetTodoById
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.Create(System.String)">
+            <summary>
+            Create
+            </summary>
+            <param name="description"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.DeleteTodoById(System.Int64)">
             <summary>
             DeleteTodoById
             </summary>
