@@ -67,10 +67,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Business\JumpTheQueue\Controllers\" />
-    <Folder Include="Business\JumpTheQueue\Converters\" />
-    <Folder Include="Business\JumpTheQueue\Dto\" />
-    <Folder Include="Business\JumpTheQueue\Service\" />
     <Folder Include="Business\SmaxHcmrManagement\Dto\" />
     <Folder Include="Business\SmaxHcmrManagement\Exceptions\" />
   </ItemGroup>

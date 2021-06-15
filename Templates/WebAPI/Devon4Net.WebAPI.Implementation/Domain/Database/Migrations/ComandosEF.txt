@@ -1,0 +1,11 @@
+
+Add-Migration Inicial -Verbose -Project 'Devon4Net.WebAPI.Implementation' -StartupProject 'Devon4Net.Application.WebAPI' -Context JumpTheQueueContext -OutputDir "Domain/Database/Migrations"
+
+
+Update-Database Inicial -Verbose -Project 'Devon4Net.WebAPI.Implementation' -StartupProject 'Devon4Net.Application.WebAPI' -Context JumpTheQueueContext 
+
+
+Remove-Migration -Verbose -Project 'Devon4Net.WebAPI.Implementation' -StartupProject 'Devon4Net.Application.WebAPI' -Context JumpTheQueueContext 
+
+
+Update-Database 0 -Verbose -Project 'Devon4Net.WebAPI.Implementation' -StartupProject 'Devon4Net.Application.WebAPI' -Context JumpTheQueueContext 

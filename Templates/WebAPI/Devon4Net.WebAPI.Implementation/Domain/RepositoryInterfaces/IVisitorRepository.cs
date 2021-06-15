@@ -1,4 +1,5 @@
 ﻿using Devon4Net.Domain.UnitOfWork.Repository;
+using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto;
 using Devon4Net.WebAPI.Implementation.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces
         /// </summary>
         /// <param name="description"></param>
         /// <returns></returns>
-        Task<Visitor> Create(string description);
+        Task<Visitor> Create(VisitorDto visitor);
 
         /// <summary>
         /// DeleteTodoById

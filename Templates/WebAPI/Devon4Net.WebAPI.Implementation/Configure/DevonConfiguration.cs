@@ -14,13 +14,16 @@ using Devon4Net.Infrastructure.MediatR.Samples.Model;
 using Devon4Net.Infrastructure.MediatR.Samples.Query;
 using Devon4Net.Infrastructure.RabbitMQ.Samples.Handllers;
 using Devon4Net.WebAPI.Implementation.Business.EmployeeManagement.Validators;
+using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Validators;
 using Devon4Net.WebAPI.Implementation.Business.MediatRManagement.Commands;
 using Devon4Net.WebAPI.Implementation.Business.MediatRManagement.Dto;
 using Devon4Net.WebAPI.Implementation.Business.MediatRManagement.Handlers;
 using Devon4Net.WebAPI.Implementation.Business.MediatRManagement.Queries;
 using Devon4Net.WebAPI.Implementation.Business.RabbitMqManagement.Handlers;
 using Devon4Net.WebAPI.Implementation.Business.TodoManagement.Validators;
+using Devon4Net.WebAPI.Implementation.Data.Repositories;
 using Devon4Net.WebAPI.Implementation.Domain.Database;
+using Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -74,6 +77,11 @@ namespace Devon4Net.WebAPI.Implementation.Configure
             {
                 SetupMediatRHandlers(services);
             }
+            SetupRepoisotiriesJumpTheQueue(services);
+        }
+        private static void SetupRepoisotiriesJumpTheQueue(IServiceCollection services)
+        {
+            services.AddTransient(typeof(IVisitorRepository), typeof(VisitorRespository));
         }
 
         private static void SetupRabbitHandlers(IServiceCollection services)
@@ -91,6 +99,7 @@ namespace Devon4Net.WebAPI.Implementation.Configure
 
         private static void SetupFluentValidators(ref IServiceCollection services)
         {
+            services.AddFluentValidation<VisitorFluentValidator>(true);
             services.AddFluentValidation<TodosFluentValidator>(true);
             services.AddFluentValidation<EmployeeFluentValidator>(true);
         }

@@ -13,6 +13,6 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Entities
         public DateTime AttentionTime { get; set; }
         public DateTime MinAttentionTime { get; set; }
         public bool Active { get; set; }
-        public List<Visitor> Customers { get; set; }
+        public ICollection<AccessCode> AccessCodes{ get; set; }
     }
 }

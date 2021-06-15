@@ -13,5 +13,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Entities
         public bool AcceptedCommercial { get; set; }
         public bool AcceptedTerms { get; set; }
         public bool UserType{ get; set; }
+
+        public AccessCode AccessCode { get; set; }
     }
 }

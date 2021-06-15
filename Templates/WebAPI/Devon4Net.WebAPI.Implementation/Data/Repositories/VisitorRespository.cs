@@ -1,5 +1,6 @@
 ﻿using Devon4Net.Domain.UnitOfWork.Repository;
 using Devon4Net.Infrastructure.Log;
+using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Validators;
 using Devon4Net.WebAPI.Implementation.Domain.Database;
 using Devon4Net.WebAPI.Implementation.Domain.Entities;
@@ -25,12 +26,21 @@ namespace Devon4Net.WebAPI.Implementation.Data.Repositories
             VisitorValidator = visitorValidator;
         }
 
-        public Task<Visitor> Create(string name)
+        public Task<Visitor> Create(VisitorDto visitorDto)
         {
-            Devon4NetLogger.Debug($"SetTodo method from repository JumpTheQueueService with value : {name}");
+            Devon4NetLogger.Debug($"Create method from repository JumpTheQueueService with value : {visitorDto}");
 
 
-            Visitor visitor = new Visitor { Name = name };
+            Visitor visitor = new Visitor 
+                            { 
+                              Name                  = visitorDto.Name,
+                              Username              = visitorDto.UserName,                  
+                              Password              = visitorDto.Password,
+                              PhoneNumber           = visitorDto.PhoneNumber,
+                              AcceptedTerms         = visitorDto.AcceptedTerms,
+                              AcceptedCommercial    = visitorDto.AcceptedCommercial,
+                              UserType              = visitorDto.UserType
+                            };
             var result = VisitorValidator.Validate(visitor);
 
             if (!result.IsValid)
