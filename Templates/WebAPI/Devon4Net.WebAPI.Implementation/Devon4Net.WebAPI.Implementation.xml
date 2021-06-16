@@ -530,9 +530,21 @@
             Visitor controller
             </summary>
         </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers.JumpTheQueueController.GetVisitors">
+            <summary>
+            Gets the entire list of Visitors
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers.JumpTheQueueController.CreateVisitor(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto.VisitorDto)">
             <summary>
             Creates a new Visitor
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers.JumpTheQueueController.DeleteVisitor(System.Int32)">
+            <summary>
+            Deletes the TODO provided the id
             </summary>
             <returns></returns>
         </member>
@@ -540,7 +552,35 @@
             <summary>
             ModelToDto Visitor transformation
             </summary>
-            <param name="item"></param>
+            <param name="visitor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service.IJumpTheQueueService.CreateVisitor(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto.VisitorDto)">
+            <summary>
+            Create a Visitor
+            </summary>
+            <param name="visitor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service.IJumpTheQueueService.GetVisitorById(System.Int32)">
+            <summary>
+            Get Visitor by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service.IJumpTheQueueService.DeleteVisitorById(System.Int32)">
+            <summary>
+            DeleteVisitorById
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service.IJumpTheQueueService.GetVisitors">
+            <summary>
+            Get All Visitors
+            </summary>
+            <param name="predicate"></param>
             <returns></returns>
         </member>
         <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service.JumpTheQueueService.#ctor(Devon4Net.Domain.UnitOfWork.UnitOfWork.IUnitOfWork{Devon4Net.WebAPI.Implementation.Domain.Database.JumpTheQueueContext})">
@@ -988,6 +1028,27 @@
             </summary>
             <param name="context"></param>
         </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Data.Repositories.VisitorRespository.GetVisitorById(System.Int32)">
+            <summary>
+            Get Visitor by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Data.Repositories.VisitorRespository.Create(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto.VisitorDto)">
+            <summary>
+            Create a new Visitor
+            </summary>
+            <param name="visitorDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Data.Repositories.VisitorRespository.DeleteVisitorById(System.Int64)">
+            <summary>
+            Deletes the Visitor by id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:Devon4Net.WebAPI.Implementation.Domain.Database.EmployeeContext">
             <summary>
             Employee database context definition
@@ -1168,18 +1229,18 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.GetTodo(System.Linq.Expressions.Expression{System.Func{Devon4Net.WebAPI.Implementation.Domain.Entities.Visitor,System.Boolean}})">
+        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.GetVisitors(System.Linq.Expressions.Expression{System.Func{Devon4Net.WebAPI.Implementation.Domain.Entities.Visitor,System.Boolean}})">
             <summary>
-            
+            Obtiene la lista de los visitantes
             </summary>
             <param name="predicate"></param>
             <returns></returns>
         </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.GetTodoById(System.Int64)">
+        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.GetVisitorById(System.Int32)">
             <summary>
-            GetTodoById
+            Obtiene el visitante por identificador
             </summary>
-            <param name="id"></param>
+            <param name="id">identificador del visitante</param>
             <returns></returns>
         </member>
         <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.Create(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto.VisitorDto)">
@@ -1189,7 +1250,7 @@
             <param name="description"></param>
             <returns></returns>
         </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.DeleteTodoById(System.Int64)">
+        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.DeleteVisitorById(System.Int64)">
             <summary>
             DeleteTodoById
             </summary>

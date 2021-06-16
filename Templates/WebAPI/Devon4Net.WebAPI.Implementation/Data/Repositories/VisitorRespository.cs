@@ -21,26 +21,40 @@ namespace Devon4Net.WebAPI.Implementation.Data.Repositories
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public VisitorRespository(JumpTheQueueContext context, VisitorFluentValidator visitorValidator) : base(context)
+        public VisitorRespository(JumpTheQueueContext context, VisitorFluentValidator visitorValidator) : base(context,true)
         {
             VisitorValidator = visitorValidator;
         }
-
+        /// <summary>
+        /// Get Visitor by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<Visitor> GetVisitorById(int id)
+        {
+            Devon4NetLogger.Debug($"GetTodoById method from repository VisitorService with value : {id}");
+            return GetFirstOrDefault(t => t.VisitorId == id);
+        }
+        /// <summary>
+        /// Create a new Visitor
+        /// </summary>
+        /// <param name="visitorDto"></param>
+        /// <returns></returns>
         public Task<Visitor> Create(VisitorDto visitorDto)
         {
             Devon4NetLogger.Debug($"Create method from repository JumpTheQueueService with value : {visitorDto}");
 
 
-            Visitor visitor = new Visitor 
-                            { 
-                              Name                  = visitorDto.Name,
-                              Username              = visitorDto.UserName,                  
-                              Password              = visitorDto.Password,
-                              PhoneNumber           = visitorDto.PhoneNumber,
-                              AcceptedTerms         = visitorDto.AcceptedTerms,
-                              AcceptedCommercial    = visitorDto.AcceptedCommercial,
-                              UserType              = visitorDto.UserType
-                            };
+            Visitor visitor = new Visitor
+            {
+                Name = visitorDto.Name,
+                Username = visitorDto.UserName,
+                Password = visitorDto.Password,
+                PhoneNumber = visitorDto.PhoneNumber,
+                AcceptedTerms = visitorDto.AcceptedTerms,
+                AcceptedCommercial = visitorDto.AcceptedCommercial,
+                UserType = visitorDto.UserType
+            };
             var result = VisitorValidator.Validate(visitor);
 
             if (!result.IsValid)
@@ -50,20 +64,28 @@ namespace Devon4Net.WebAPI.Implementation.Data.Repositories
 
             return Create(visitor);
         }
-
-        public Task<long> DeleteTodoById(long id)
+        /// <summary>
+        /// Deletes the Visitor by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<long> DeleteVisitorById(long id)
         {
-            throw new NotImplementedException();
+            Devon4NetLogger.Debug($"DeleteVisitorById method from repository VisitorService with value : {id}");
+            var deleted = await Delete(t => t.VisitorId == id).ConfigureAwait(false);
+
+            if (deleted)
+            {
+                return id;
+            }
+
+            throw new ApplicationException($"The Todo entity {id} has not been deleted.");
         }
 
-        public Task<IList<Visitor>> GetTodo(Expression<Func<Visitor, bool>> predicate = null)
+        public Task<IList<Visitor>> GetVisitors(Expression<Func<Visitor, bool>> predicate = null)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Visitor> GetTodoById(long id)
-        {
-            throw new NotImplementedException();
+            Devon4NetLogger.Debug("GetVisitors method from VisitorRespository VisitorService");
+            return Get(predicate);
         }
     }
 }

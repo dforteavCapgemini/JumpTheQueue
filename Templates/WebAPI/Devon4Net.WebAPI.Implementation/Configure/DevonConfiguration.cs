@@ -117,6 +117,10 @@ namespace Devon4Net.WebAPI.Implementation.Configure
             services.SetupDatabase<JumpTheQueueContext>(configuration, "JumpTheQueue", DatabaseType.SqlServer);
             services.SetupDatabase<TodoContext>(configuration, "Default", DatabaseType.InMemory);
             services.SetupDatabase<EmployeeContext>(configuration, "Employee", DatabaseType.InMemory);
+
+            using var jumpTheQueueContext = services.BuildServiceProvider().GetService<IServiceScopeFactory>().CreateScope().ServiceProvider.GetService<JumpTheQueueContext>();
+            jumpTheQueueContext.Database.EnsureDeleted();
+            jumpTheQueueContext.Database.Migrate();
         }
 
         private static void SetupJwtPolicies(ref IServiceCollection services)

@@ -15,5 +15,6 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto
         public bool AcceptedTerms { get; set; }
         public bool UserType { get; set; }
 
+        public AccessCodeDto AccessCode { get; set; }
     }
 }

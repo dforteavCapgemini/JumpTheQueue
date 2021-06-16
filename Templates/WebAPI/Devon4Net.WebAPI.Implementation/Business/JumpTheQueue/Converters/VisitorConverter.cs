@@ -11,17 +11,32 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Converters
         /// <summary>
         /// ModelToDto Visitor transformation
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="visitor"></param>
         /// <returns></returns>
-        public static VisitorDto ModelToDto(Visitor item)
+        public static VisitorDto ModelToDto(Visitor visitor)
         {
-            if (item == null) return new VisitorDto();
+            if (visitor == null) return new VisitorDto();
+            AccessCodeDto accessCodeDto = null;
+
+                if (visitor.AccessCode != null)
+                {
+                     accessCodeDto = new AccessCodeDto
+                    {
+                        TicketNumber    = visitor.AccessCode.TicketNumber,
+                        CreationTime    = visitor.AccessCode.CreationTime,
+                        StartTime       = visitor.AccessCode.StartTime,
+                        Endtime         = visitor.AccessCode.Endtime
+                    };
+                }
+
+
 
             return new VisitorDto
             {
-                Id = item.VisitorId,
-                UserName  = item.Username,
-                Name = item.Name
+                Id = visitor.VisitorId,
+                UserName = visitor.Username,
+                Name = visitor.Name,
+                AccessCode = accessCodeDto
             };
         }
     }

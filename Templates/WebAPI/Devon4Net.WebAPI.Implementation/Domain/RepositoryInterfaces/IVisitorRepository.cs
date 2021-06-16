@@ -12,18 +12,18 @@ namespace Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces
     public interface IVisitorRepository : IRepository<Visitor>
     {
         /// <summary>
-        /// 
+        /// Obtiene la lista de los visitantes
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        Task<IList<Visitor>> GetTodo(Expression<Func<Visitor, bool>> predicate = null);
+        public Task<IList<Visitor>> GetVisitors(Expression<Func<Visitor, bool>> predicate = null);
 
         /// <summary>
-        /// GetTodoById
+        /// Obtiene el visitante por identificador
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">identificador del visitante</param>
         /// <returns></returns>
-        Task<Visitor> GetTodoById(long id);
+        public Task<Visitor> GetVisitorById(int id);
 
         /// <summary>
         /// Create
@@ -37,6 +37,6 @@ namespace Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<long> DeleteTodoById(long id);
+        Task<long> DeleteVisitorById(long id);
     }
 }
