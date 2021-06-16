@@ -19,7 +19,7 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Converters
 
             return new VisitorDto
             {
-                Id = item.Id,
+                Id = item.VisitorId,
                 UserName  = item.Username,
                 Name = item.Name
             };

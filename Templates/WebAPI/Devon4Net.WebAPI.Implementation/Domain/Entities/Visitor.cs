@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Devon4Net.WebAPI.Implementation.Domain.Entities
 {
-    public class Visitor : Entidad
+    public class Visitor
     {
+        public int VisitorId { get; set; }
         public string Username { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
