@@ -11,7 +11,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                 name: "DailyQueues",
                 columns: table => new
                 {
-                    DailyQueueId = table.Column<int>(nullable: false)
+                    QueueId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Logo = table.Column<string>(nullable: true),
@@ -24,7 +24,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DailyQueues", x => x.DailyQueueId);
+                    table.PrimaryKey("PK_DailyQueues", x => x.QueueId);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,7 +66,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                         name: "FK_AccessCodes_DailyQueues_DailyQueueId",
                         column: x => x.DailyQueueId,
                         principalTable: "DailyQueues",
-                        principalColumn: "DailyQueueId",
+                        principalColumn: "QueueId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AccessCodes_Visitors_VisitorId",
@@ -78,7 +78,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
 
             migrationBuilder.InsertData(
                 table: "DailyQueues",
-                columns: new[] { "DailyQueueId", "Active", "AttentionTime", "CurrentNumber", "Customers", "Logo", "MinAttentionTime", "Name", "Password" },
+                columns: new[] { "QueueId", "Active", "AttentionTime", "CurrentNumber", "Customers", "Logo", "MinAttentionTime", "Name", "Password" },
                 values: new object[] { 1, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 9, "C:/logos/Day1Logo.png", new DateTime(1970, 1, 1, 0, 1, 0, 0, DateTimeKind.Unspecified), "Day2", null });
 
             migrationBuilder.InsertData(
@@ -103,15 +103,15 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                 columns: new[] { "AccessCodeId", "CreationTime", "DailyQueueId", "Endtime", "StartTime", "TicketNumber", "VisitorId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(1584), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(1947), 1, 1 },
-                    { 2, new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2750), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 2, 2 },
-                    { 3, new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2800), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 3, 3 },
-                    { 4, new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2850), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 4, 4 },
-                    { 5, new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2855), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 5, 5 },
-                    { 6, new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2860), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 6, 6 },
-                    { 7, new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2864), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 7, 7 },
-                    { 8, new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2868), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 8, 8 },
-                    { 9, new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2872), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 9, 9 }
+                    { 1, new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(3131), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(3527), 1, 1 },
+                    { 2, new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4223), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 2, 2 },
+                    { 3, new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4270), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 3, 3 },
+                    { 4, new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4275), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 4, 4 },
+                    { 5, new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4278), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 5, 5 },
+                    { 6, new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4282), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 6, 6 },
+                    { 7, new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4285), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 7, 7 },
+                    { 8, new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4289), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 8, 8 },
+                    { 9, new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4292), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified), 9, 9 }
                 });
 
             migrationBuilder.CreateIndex(

@@ -16,12 +16,13 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Converters
         public static VisitorDto ModelToDto(Visitor visitor)
         {
             if (visitor == null) return new VisitorDto();
-            AccessCodeDto accessCodeDto = null;
+            AccessCodeCto accessCodeDto = null;
 
                 if (visitor.AccessCode != null)
                 {
-                     accessCodeDto = new AccessCodeDto
+                     accessCodeDto = new AccessCodeCto
                     {
+                        AccessCodeId    = visitor.AccessCode.AccessCodeId,
                         TicketNumber    = visitor.AccessCode.TicketNumber,
                         CreationTime    = visitor.AccessCode.CreationTime,
                         StartTime       = visitor.AccessCode.StartTime,

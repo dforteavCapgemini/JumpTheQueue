@@ -17,7 +17,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database
         /// </summary>
         public virtual DbSet<Visitor> Visitors { get; set; }
         public virtual DbSet<AccessCode> AccessCodes { get; set; }
-        public virtual DbSet<DailyQueue> DailyQueues{ get; set; }
+        public virtual DbSet<Queue> DailyQueues{ get; set; }
         /// <summary>
         /// Any extra configuration should be here
         /// </summary>
@@ -38,12 +38,12 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database
             .Entity<Visitor>()
             .HasOne(a => a.AccessCode)
             .WithOne(b=> b.Visitor)
-            .HasForeignKey<AccessCode>(b => b.VisitorId);
+            .HasForeignKey<AccessCode>(b => b.VisitorId).IsRequired();
 
             modelBuilder
-            .Entity<DailyQueue>()
+            .Entity<Queue>()
             .HasMany(a => a.AccessCodes)
-            .WithOne(b => b.DailyQueue);
+            .WithOne(b => b.DailyQueue).IsRequired();
             #endregion
 
             #region VisitorSeed
@@ -61,8 +61,8 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database
 
             #endregion 
 
-            modelBuilder.Entity<DailyQueue>().HasData(
-                new DailyQueue {DailyQueueId = 1, Name = "Day2", Logo = "C:/logos/Day1Logo.png", CurrentNumber = 1, MinAttentionTime = new DateTime(1970,01,01,0,1,0), Active = true ,   Customers = 9 }
+            modelBuilder.Entity<Queue>().HasData(
+                new Queue {QueueId = 1, Name = "Day2", Logo = "C:/logos/Day1Logo.png", CurrentNumber = 1, MinAttentionTime = new DateTime(1970,01,01,0,1,0), Active = true ,   Customers = 9 }
                 );
 
             #region AccessCodeSeed

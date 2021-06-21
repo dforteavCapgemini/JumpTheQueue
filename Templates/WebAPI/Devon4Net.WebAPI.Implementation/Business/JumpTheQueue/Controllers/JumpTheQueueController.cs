@@ -1,4 +1,5 @@
 ﻿using Devon4Net.Infrastructure.Log;
+using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Cmd;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service;
 using Devon4Net.WebAPI.Implementation.Domain.Entities;
@@ -16,9 +17,9 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers
     /// <summary>
     /// Visitor controller
     /// </summary>
-    [EnableCors("CorsPolicy")]
     [ApiController]
     [Route("[controller]")]
+    [EnableCors("CorsPolicy")]
     public class JumpTheQueueController : ControllerBase
     {
         public IJumpTheQueueService _JumpTheQueueService;
@@ -32,7 +33,8 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers
         /// </summary>
         /// <returns></returns>
         // [HttpGet]
-        [HttpGet("/GetVisitors")]
+        [HttpGet]
+        [Route("GetVisitors")]
         [ProducesResponseType(typeof(List<VisitorDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -62,19 +64,52 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers
 
 
         /// <summary>
-        /// Deletes the TODO provided the id
+        /// Deletes the Visitor provided by the id
         /// </summary>
         /// <returns></returns>
         [HttpDelete]
         [Route("DeleteVisitor")]
-        [ProducesResponseType(typeof(long), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteVisitor(int visitorId)
         {
             Devon4NetLogger.Debug("Executing GetTodo from controller TodoController");
-            return Ok(await _JumpTheQueueService.DeleteVisitorById(visitorId).ConfigureAwait(false));
+            await _JumpTheQueueService.DeleteVisitorById(visitorId).ConfigureAwait(false);
+            return Ok();
+        }
+     
+        /// <summary>
+        /// Create a new AccessCode
+        /// </summary>
+        [HttpPost]
+        [Route("CreateAccessCode")]
+        [ProducesResponseType(typeof(AccessCode), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> CreateAccessCode([FromBody] AccessCodeCmd accessCodeDto)
+        {
+            Devon4NetLogger.Debug("Executing GetTodo from controller TodoController");
+            var result = await _JumpTheQueueService.CreateAccessCode(accessCodeDto).ConfigureAwait(false);
+            return StatusCode(StatusCodes.Status201Created, result);
+        }
+
+        /// <summary>
+        /// Deletes the Visitor provided by the id
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("DeleteAccessCode")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> DeleteAccessCode(int accessCodeId)
+        {
+            Devon4NetLogger.Debug("Executing GetTodo from controller TodoController");
+            await _JumpTheQueueService.DeleteAccessCodeById(accessCodeId).ConfigureAwait(false);
+            return Ok();
         }
     }
 }

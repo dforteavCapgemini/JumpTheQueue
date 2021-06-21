@@ -33,10 +33,10 @@ namespace Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces
         Task<Visitor> Create(VisitorDto visitor);
 
         /// <summary>
-        /// DeleteTodoById
+        /// Delete visitor ById
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<long> DeleteVisitorById(long id);
+        Task DeleteVisitorById(int id);
     }
 }

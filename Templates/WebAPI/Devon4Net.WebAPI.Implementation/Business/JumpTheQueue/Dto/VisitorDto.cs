@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto
+﻿namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto
 {
     public class VisitorDto
     {
@@ -15,6 +11,6 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto
         public bool AcceptedTerms { get; set; }
         public bool UserType { get; set; }
 
-        public AccessCodeDto AccessCode { get; set; }
+        public AccessCodeCto AccessCode { get; set; }
     }
 }

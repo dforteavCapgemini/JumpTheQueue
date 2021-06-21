@@ -5,35 +5,37 @@ using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Validators;
 using Devon4Net.WebAPI.Implementation.Domain.Database;
 using Devon4Net.WebAPI.Implementation.Domain.Entities;
 using Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Devon4Net.WebAPI.Implementation.Data.Repositories
 {
-    public class VisitorRespository : Repository<Visitor>, IVisitorRepository
+    public class VisitorRepository : Repository<Visitor>, IVisitorRepository
     {
-        private VisitorFluentValidator VisitorValidator { get; }
+        private readonly JumpTheQueueContext _jumpTheQueueContext;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public VisitorRespository(JumpTheQueueContext context, VisitorFluentValidator visitorValidator) : base(context,true)
+        public VisitorRepository(JumpTheQueueContext context, bool dbContextBehaviour = true) : base(context, dbContextBehaviour)
         {
-            VisitorValidator = visitorValidator;
+            _jumpTheQueueContext = context;
         }
         /// <summary>
         /// Get Visitor by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Task<Visitor> GetVisitorById(int id)
+        public async Task<Visitor> GetVisitorById(int id)
         {
-            Devon4NetLogger.Debug($"GetTodoById method from repository VisitorService with value : {id}");
-            return GetFirstOrDefault(t => t.VisitorId == id);
+            Devon4NetLogger.Debug($"GetVisitorById method from repository VisitorService with value : {id}");
+            return await _jumpTheQueueContext.Visitors.FirstOrDefaultAsync(v => v.VisitorId == id);
         }
         /// <summary>
         /// Create a new Visitor
@@ -55,37 +57,30 @@ namespace Devon4Net.WebAPI.Implementation.Data.Repositories
                 AcceptedCommercial = visitorDto.AcceptedCommercial,
                 UserType = visitorDto.UserType
             };
-            var result = VisitorValidator.Validate(visitor);
 
-            if (!result.IsValid)
-            {
-                throw new ArgumentException($"The 'name' field can not be null.{result.Errors}");
-            }
 
-            return Create(visitor);
+            return Create(visitor,false);
         }
-        /// <summary>
-        /// Deletes the Visitor by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<long> DeleteVisitorById(long id)
+      
+        public async Task<IList<Visitor>> GetVisitors(Expression<Func<Visitor, bool>> predicate = null)
         {
-            Devon4NetLogger.Debug($"DeleteVisitorById method from repository VisitorService with value : {id}");
-            var deleted = await Delete(t => t.VisitorId == id).ConfigureAwait(false);
-
-            if (deleted)
-            {
-                return id;
-            }
-
-            throw new ApplicationException($"The Todo entity {id} has not been deleted.");
-        }
-
-        public Task<IList<Visitor>> GetVisitors(Expression<Func<Visitor, bool>> predicate = null)
-        {
+ 
             Devon4NetLogger.Debug("GetVisitors method from VisitorRespository VisitorService");
-            return Get(predicate);
+            return await _jumpTheQueueContext.Visitors.Where(predicate).Include(v => v.AccessCode).ToListAsync();
+        }
+
+        public async Task DeleteVisitorById(int id)
+        {
+
+            var visitor = await _jumpTheQueueContext.Visitors.FirstOrDefaultAsync(v => v.VisitorId == id);
+
+            if (visitor is null)
+            {
+
+                throw new ApplicationException($"The visitor {id} has not been found.");
+            }
+
+            _jumpTheQueueContext.Visitors.Remove(visitor);
         }
     }
 }

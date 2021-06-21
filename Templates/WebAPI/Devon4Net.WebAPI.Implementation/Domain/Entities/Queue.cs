@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Devon4Net.WebAPI.Implementation.Domain.Entities
 {
-    public class DailyQueue
+    public class Queue
     {
-        public int DailyQueueId { get; set; }
+        public int QueueId { get; set; }
         public string Name { get; set; }
         public string Logo { get; set; }
         public string Password { get; set; }

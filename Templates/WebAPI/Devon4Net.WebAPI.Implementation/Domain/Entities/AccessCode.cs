@@ -14,6 +14,6 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Entities
         public int VisitorId { get; set; }
         public Visitor Visitor { get; set; }
         public int DailyQueueId { get; set; }
-        public DailyQueue DailyQueue { get; set; }
+        public Queue DailyQueue { get; set; }
     }
 }

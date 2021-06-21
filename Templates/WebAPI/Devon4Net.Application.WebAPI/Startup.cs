@@ -34,7 +34,8 @@ namespace Devon4Net.Application.WebAPI
             services.AddControllers();
             services.AddOptions();
             services.AddMvc(option => option.EnableEndpointRouting = false)
-                .AddJsonOptions(options => {options.JsonSerializerOptions.IgnoreNullValues = true;});
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .AddJsonOptions(options => {options.JsonSerializerOptions.IgnoreNullValues = true ;});
         }
 
         /// <summary>

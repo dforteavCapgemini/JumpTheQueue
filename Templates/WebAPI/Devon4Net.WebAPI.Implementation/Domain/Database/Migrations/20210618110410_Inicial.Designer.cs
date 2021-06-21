@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
 {
     [DbContext(typeof(JumpTheQueueContext))]
-    [Migration("20210616074531_Inicial")]
+    [Migration("20210618110410_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,17 +59,17 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                         new
                         {
                             AccessCodeId = 1,
-                            CreationTime = new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(1584),
+                            CreationTime = new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(3131),
                             DailyQueueId = 1,
                             Endtime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            StartTime = new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(1947),
+                            StartTime = new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(3527),
                             TicketNumber = 1,
                             VisitorId = 1
                         },
                         new
                         {
                             AccessCodeId = 2,
-                            CreationTime = new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2750),
+                            CreationTime = new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4223),
                             DailyQueueId = 1,
                             Endtime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartTime = new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified),
@@ -79,7 +79,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                         new
                         {
                             AccessCodeId = 3,
-                            CreationTime = new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2800),
+                            CreationTime = new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4270),
                             DailyQueueId = 1,
                             Endtime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartTime = new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified),
@@ -89,7 +89,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                         new
                         {
                             AccessCodeId = 4,
-                            CreationTime = new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2850),
+                            CreationTime = new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4275),
                             DailyQueueId = 1,
                             Endtime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartTime = new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified),
@@ -99,7 +99,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                         new
                         {
                             AccessCodeId = 5,
-                            CreationTime = new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2855),
+                            CreationTime = new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4278),
                             DailyQueueId = 1,
                             Endtime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartTime = new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified),
@@ -109,7 +109,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                         new
                         {
                             AccessCodeId = 6,
-                            CreationTime = new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2860),
+                            CreationTime = new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4282),
                             DailyQueueId = 1,
                             Endtime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartTime = new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified),
@@ -119,7 +119,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                         new
                         {
                             AccessCodeId = 7,
-                            CreationTime = new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2864),
+                            CreationTime = new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4285),
                             DailyQueueId = 1,
                             Endtime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartTime = new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified),
@@ -129,7 +129,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                         new
                         {
                             AccessCodeId = 8,
-                            CreationTime = new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2868),
+                            CreationTime = new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4289),
                             DailyQueueId = 1,
                             Endtime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartTime = new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified),
@@ -139,7 +139,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                         new
                         {
                             AccessCodeId = 9,
-                            CreationTime = new DateTime(2021, 6, 16, 9, 45, 30, 653, DateTimeKind.Local).AddTicks(2872),
+                            CreationTime = new DateTime(2021, 6, 18, 13, 4, 10, 19, DateTimeKind.Local).AddTicks(4292),
                             DailyQueueId = 1,
                             Endtime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartTime = new DateTime(2008, 1, 1, 0, 1, 1, 0, DateTimeKind.Unspecified),
@@ -148,9 +148,9 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Devon4Net.WebAPI.Implementation.Domain.Entities.DailyQueue", b =>
+            modelBuilder.Entity("Devon4Net.WebAPI.Implementation.Domain.Entities.Queue", b =>
                 {
-                    b.Property<int>("DailyQueueId")
+                    b.Property<int>("QueueId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -179,14 +179,14 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("DailyQueueId");
+                    b.HasKey("QueueId");
 
                     b.ToTable("DailyQueues");
 
                     b.HasData(
                         new
                         {
-                            DailyQueueId = 1,
+                            QueueId = 1,
                             Active = true,
                             AttentionTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CurrentNumber = 1,
@@ -346,7 +346,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database.Migrations
 
             modelBuilder.Entity("Devon4Net.WebAPI.Implementation.Domain.Entities.AccessCode", b =>
                 {
-                    b.HasOne("Devon4Net.WebAPI.Implementation.Domain.Entities.DailyQueue", "DailyQueue")
+                    b.HasOne("Devon4Net.WebAPI.Implementation.Domain.Entities.Queue", "DailyQueue")
                         .WithMany("AccessCodes")
                         .HasForeignKey("DailyQueueId")
                         .OnDelete(DeleteBehavior.Cascade)

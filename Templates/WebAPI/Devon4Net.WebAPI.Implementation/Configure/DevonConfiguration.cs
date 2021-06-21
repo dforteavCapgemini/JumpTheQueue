@@ -56,11 +56,13 @@ namespace Devon4Net.WebAPI.Implementation.Configure
 
             services.RegisterAssemblyPublicNonGenericClasses(assemblyToScan)
                 .Where(x => x.Name.EndsWith("Service"))
-                .AsPublicImplementedInterfaces();
+                .AsPublicImplementedInterfaces(lifetime: ServiceLifetime.Scoped);
 
             services.RegisterAssemblyPublicNonGenericClasses(assemblyToScan)
                 .Where(x => x.Name.EndsWith("Repository"))
-                .AsPublicImplementedInterfaces();
+                .AsPublicImplementedInterfaces(lifetime:ServiceLifetime.Scoped);
+
+            services.AddScoped<IUnitOfWorkJumpTheQueue, UnitOfWorkJumpTheQueue>();
 
 
             using var serviceProvider = services.BuildServiceProvider();
@@ -77,11 +79,7 @@ namespace Devon4Net.WebAPI.Implementation.Configure
             {
                 SetupMediatRHandlers(services);
             }
-            SetupRepoisotiriesJumpTheQueue(services);
-        }
-        private static void SetupRepoisotiriesJumpTheQueue(IServiceCollection services)
-        {
-            services.AddTransient(typeof(IVisitorRepository), typeof(VisitorRespository));
+          
         }
 
         private static void SetupRabbitHandlers(IServiceCollection services)
@@ -118,9 +116,9 @@ namespace Devon4Net.WebAPI.Implementation.Configure
             services.SetupDatabase<TodoContext>(configuration, "Default", DatabaseType.InMemory);
             services.SetupDatabase<EmployeeContext>(configuration, "Employee", DatabaseType.InMemory);
 
-            using var jumpTheQueueContext = services.BuildServiceProvider().GetService<IServiceScopeFactory>().CreateScope().ServiceProvider.GetService<JumpTheQueueContext>();
-            jumpTheQueueContext.Database.EnsureDeleted();
-            jumpTheQueueContext.Database.Migrate();
+         //   using var jumpTheQueueContext = services.BuildServiceProvider().GetService<IServiceScopeFactory>().CreateScope().ServiceProvider.GetService<JumpTheQueueContext>();
+           // jumpTheQueueContext.Database.EnsureDeleted();
+           // jumpTheQueueContext.Database.Migrate();
         }
 
         private static void SetupJwtPolicies(ref IServiceCollection services)

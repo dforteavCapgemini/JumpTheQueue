@@ -12,11 +12,10 @@ namespace Devon4Net.Domain.UnitOfWork.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private DbContext DbContext { get; set; }
+        internal readonly DbContext _dbContext;
         private bool DbContextBehaviour  { get; set; }
 
         private IQueryable<T> Queryable => SetQuery<T>();
-
         /// <summary>
         /// Initialization class
         /// </summary>
@@ -24,35 +23,26 @@ namespace Devon4Net.Domain.UnitOfWork.Repository
         /// <param name="dbContextBehaviour">Sets the AutoDetectChangesEnabled, LazyLoadingEnabled and QueryTrackingBehavior flag to true or false</param>
         public Repository(DbContext context, bool dbContextBehaviour = false)
         {
-            DbContext = context;
+            _dbContext = context;
             DbContextBehaviour = dbContextBehaviour;
         }
 
         public async Task<T> Create(T entity, bool detach = true)
         {
-            var result = await DbContext.Set<T>().AddAsync(entity).ConfigureAwait(false);
-            result.State = EntityState.Added;
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
-            if (detach) result.State = EntityState.Detached;
-            return result.Entity;
+            var entityEntry = await _dbContext.AddAsync(entity).ConfigureAwait(false); ;
+            return entityEntry.Entity;
         }
 
         public async Task<T> Update(T entity, bool detach = true)
         {
-            var result = DbContext.Set<T>().Update(entity);
-            result.State = EntityState.Modified;
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
-            if (detach) result.State = EntityState.Detached;
-            return result.Entity;
+            var entityEntry = _dbContext.Update(entity);
+            return entityEntry.Entity;
         }
 
         public async Task<bool> Delete(T entity, bool detach = true)
         {
-            var result = DbContext.Set<T>().Remove(entity);
-            result.State = EntityState.Deleted;
-            var deleted = await DbContext.SaveChangesAsync().ConfigureAwait(false);
-            if (detach) result.State = EntityState.Detached;
-            return deleted > 0;
+            var result = _dbContext.Remove(entity);
+            return result.Entity != null;
         }
 
         public async Task<bool> Delete(Expression<Func<T, bool>> predicate = null)
@@ -153,22 +143,23 @@ namespace Devon4Net.Domain.UnitOfWork.Repository
         private IQueryable<T> SetQuery<T>() where T : class
         {
             SetContextBehaviour(DbContextBehaviour);
-            return DbContext.Set<T>().AsNoTracking();
+          
+            return _dbContext.Set<T>().AsNoTracking();
         }
 
         private void SetContextBehaviour( bool enabled)
         {
-            DbContext.ChangeTracker.AutoDetectChangesEnabled = enabled;
+            _dbContext.ChangeTracker.AutoDetectChangesEnabled = enabled;
 
-            DbContext.ChangeTracker.LazyLoadingEnabled = enabled;
+            _dbContext.ChangeTracker.LazyLoadingEnabled = enabled;
 
-            DbContext.ChangeTracker.QueryTrackingBehavior = enabled ? QueryTrackingBehavior.TrackAll : QueryTrackingBehavior.NoTracking;
+            _dbContext.ChangeTracker.QueryTrackingBehavior = enabled ? QueryTrackingBehavior.TrackAll : QueryTrackingBehavior.NoTracking;
 
         }
 
         internal void SetContext(DbContext context)
         {
-            DbContext = context ?? throw new ContextNullException(nameof(context));
+             throw new ContextNullException(nameof(context));
         }
     }
 }
