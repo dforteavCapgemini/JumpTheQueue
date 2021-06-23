@@ -11,10 +11,6 @@ namespace Devon4Net.WebAPI.Implementation.Data.Repositories
         IAccessCodeRepository AccessCodeRepository { get; }
         IQueueRepository QueueRepository { get; }
 
-        /// <summary>
-        /// Hace persistentes los cambios en el repositorio.
-        /// </summary>
-        //void GuardarCambios();
         Task<bool> SaveChanges(CancellationToken cancellationToken = default(CancellationToken));
 
 

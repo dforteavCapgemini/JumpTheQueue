@@ -2,6 +2,7 @@
 using Devon4Net.WebAPI.Implementation.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Converters
@@ -23,6 +24,7 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Converters
                      accessCodeDto = new AccessCodeCto
                     {
                         AccessCodeId    = visitor.AccessCode.AccessCodeId,
+                        PositionAtQueue = PositionAtQueue(visitor.AccessCode.TicketNumber,visitor.AccessCode.DailyQueue),
                         TicketNumber    = visitor.AccessCode.TicketNumber,
                         CreationTime    = visitor.AccessCode.CreationTime,
                         StartTime       = visitor.AccessCode.StartTime,
@@ -39,6 +41,11 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Converters
                 Name = visitor.Name,
                 AccessCode = accessCodeDto
             };
+        }
+
+        private static int PositionAtQueue(int ticketNumber, Queue dailyQueue)
+        {
+            return dailyQueue.AccessCodes.Where(a => a.TicketNumber <= ticketNumber).Count();
         }
     }
 }

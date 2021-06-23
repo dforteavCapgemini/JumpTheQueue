@@ -31,10 +31,6 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database
         {
             #region Visitor
             modelBuilder
-            .Entity<Visitor>(entity =>
-            {
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(255);  
-            })
             .Entity<Visitor>()
             .HasOne(a => a.AccessCode)
             .WithOne(b=> b.Visitor)
@@ -48,16 +44,17 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database
 
             #region VisitorSeed
             modelBuilder.Entity<Visitor>().HasData(
-                new Visitor { VisitorId = -1, Username = "mike@mail.com",    Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = false, AcceptedTerms = true, UserType = true },
-                new Visitor { VisitorId = 1, Username = "peter@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true, UserType = false },
-                new Visitor { VisitorId = 2, Username = "pablo@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true, UserType = false },
-                new Visitor { VisitorId = 3, Username = "test1@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true, UserType = false },
-                new Visitor { VisitorId = 4, Username = "test2@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true, UserType = false },
-                new Visitor { VisitorId = 5, Username = "test3@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true, UserType = false },
-                new Visitor { VisitorId = 6, Username = "test4@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true, UserType = false },
-                new Visitor { VisitorId = 7, Username = "test5@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true, UserType = false },
-                new Visitor { VisitorId = 8, Username = "test6@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true, UserType = false },
-                new Visitor { VisitorId = 9, Username = "test7@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true, UserType = false });
+                new Visitor { VisitorId = -1, Username = "mike@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = false, AcceptedTerms = true,     UserType = false },
+                new Visitor { VisitorId = 1, Username = "peter@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
+                new Visitor { VisitorId = 2, Username = "pablo@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
+                new Visitor { VisitorId = 3, Username = "test1@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
+                new Visitor { VisitorId = 4, Username = "test2@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
+                new Visitor { VisitorId = 5, Username = "test3@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
+                new Visitor { VisitorId = 6, Username = "test4@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
+                new Visitor { VisitorId = 7, Username = "test5@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
+                new Visitor { VisitorId = 8, Username = "test6@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
+                new Visitor { VisitorId = 9, Username = "test7@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
+                new Visitor { VisitorId = 10, Username = "true@user.com", Name = "testUser", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = false, AcceptedTerms = true,   UserType = true });
 
             #endregion 
 
@@ -75,7 +72,8 @@ namespace Devon4Net.WebAPI.Implementation.Domain.Database
                 new AccessCode { AccessCodeId = 6, TicketNumber = 6, CreationTime = DateTime.Now, StartTime = new DateTime(2008, 01, 01, 0, 1, 01), VisitorId = 6, DailyQueueId = 1 },
                 new AccessCode { AccessCodeId = 7, TicketNumber = 7, CreationTime = DateTime.Now, StartTime = new DateTime(2008, 01, 01, 0, 1, 01), VisitorId = 7, DailyQueueId = 1 },
                 new AccessCode { AccessCodeId = 8, TicketNumber = 8, CreationTime = DateTime.Now, StartTime = new DateTime(2008, 01, 01, 0, 1, 01), VisitorId = 8, DailyQueueId = 1 },
-                new AccessCode { AccessCodeId = 9, TicketNumber = 9, CreationTime = DateTime.Now, StartTime = new DateTime(2008, 01, 01, 0, 1, 01), VisitorId = 9, DailyQueueId = 1 });
+                new AccessCode { AccessCodeId = 9, TicketNumber = 9, CreationTime = DateTime.Now, StartTime = new DateTime(2008, 01, 01, 0, 1, 01), VisitorId = 9, DailyQueueId = 1 },
+                new AccessCode { AccessCodeId = 10, TicketNumber = 10, CreationTime = DateTime.Now, StartTime = new DateTime(2008, 01, 01, 0, 1, 01), VisitorId = 10, DailyQueueId = 1 });
             #endregion
         }
     }

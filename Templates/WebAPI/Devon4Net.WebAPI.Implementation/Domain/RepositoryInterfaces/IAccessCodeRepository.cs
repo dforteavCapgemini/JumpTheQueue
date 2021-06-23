@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces
 {
-    public interface IAccessCodeRepository : IRepository<AccessCode>
+    public interface IAccessCodeRepository 
     {
         /// <summary>
         /// Get The AccessCode by Id
@@ -32,10 +32,10 @@ namespace Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces
         /// <returns></returns>
         Task<AccessCode> CreateAccessCode(AccessCode accessCodeEto);
         /// <summary>
-        /// DeleteAccessCodeById
+        /// Delete AccessCode
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task DeleteAccessCodeById(int id);
+        Task DeleteAccessCode(AccessCode accessCode);
     }
 }

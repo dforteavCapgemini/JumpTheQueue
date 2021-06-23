@@ -1,4 +1,5 @@
 ﻿using Devon4Net.Domain.UnitOfWork.Repository;
+using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Cmd;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto;
 using Devon4Net.WebAPI.Implementation.Domain.Entities;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces
 {
-    public interface IVisitorRepository : IRepository<Visitor>
+    public interface IVisitorRepository 
     {
         /// <summary>
         /// Obtiene la lista de los visitantes
@@ -30,7 +31,7 @@ namespace Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces
         /// </summary>
         /// <param name="description"></param>
         /// <returns></returns>
-        Task<Visitor> Create(VisitorDto visitor);
+        Task<Visitor> Create(VisitorCmd visitor);
 
         /// <summary>
         /// Delete visitor ById

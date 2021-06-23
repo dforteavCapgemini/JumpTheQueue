@@ -14,41 +14,34 @@ using System.Threading.Tasks;
 
 namespace Devon4Net.WebAPI.Implementation.Data.Repositories
 {
-    public class AccessCodeRepository : Repository<AccessCode>, IAccessCodeRepository
+    public class AccessCodeRepository :  IAccessCodeRepository
     {
         private readonly JumpTheQueueContext _jumpTheQueueContext;
 
-        public AccessCodeRepository(JumpTheQueueContext jumpTheQueueContext, bool dbContextBehaviour = true) : base(jumpTheQueueContext, dbContextBehaviour)
+        public AccessCodeRepository(JumpTheQueueContext jumpTheQueueContext, bool dbContextBehaviour = true) 
         {
             _jumpTheQueueContext = jumpTheQueueContext;
         }
 
-
-        /// <summary>
-        /// Get AccessCode  by Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public async Task<AccessCode> GetAccessCodeById(int id)
         {
-            Devon4NetLogger.Debug($"GetAccessCodeById method from repository JumpThequeueService with value : {id}");
-            return await _jumpTheQueueContext.AccessCodes.FirstOrDefaultAsync(v => v.AccessCodeId == id);
+            return await _jumpTheQueueContext.AccessCodes
+                .Include(a => a.DailyQueue)
+                .Include(a => a.Visitor)
+                .FirstOrDefaultAsync(v => v.AccessCodeId == id);
         }
 
-
-        public async Task DeleteAccessCodeById(int id)
+        public Task DeleteAccessCode(AccessCode accessCode)
         {
-
-            var accessCode = await _jumpTheQueueContext.AccessCodes.FirstOrDefaultAsync(v => v.VisitorId == id);
-
             if (accessCode is null)
             {
 
-                throw new ApplicationException($"The accessCode {id} has not been found.");
+                throw new ApplicationException($"The accessCode  can´t be null");
             }
 
             _jumpTheQueueContext.AccessCodes.Remove(accessCode);
 
+            return Task.CompletedTask;
         }
 
         public async Task<IList<AccessCode>> GetAccessCodes(Expression<Func<AccessCode, bool>> predicate = null)
@@ -61,23 +54,19 @@ namespace Devon4Net.WebAPI.Implementation.Data.Repositories
 
         public async Task<AccessCode> CreateAccessCode(AccessCode accessCode)
         {
-            Devon4NetLogger.Debug($"SaveAccessCode method from repository AccessCodeRepository");
+            //Get las ticket or 0 if there aren´t any access code in the queue
+            int lastTicketNumber = (await _jumpTheQueueContext.AccessCodes
+                                .Where(a => a.DailyQueue == accessCode.DailyQueue)
+                                .OrderBy(accessCode => accessCode.TicketNumber)
+                                .LastOrDefaultAsync())?.TicketNumber ?? 0;
 
-            int accessCodeInQueue =  _jumpTheQueueContext.AccessCodes.Where(a => a.DailyQueue == accessCode.DailyQueue).Count();
-            accessCode.TicketNumber = accessCodeInQueue + 1;
+            accessCode.TicketNumber = lastTicketNumber + 1;
             accessCode.CreationTime = DateTime.Now;
-            accessCode = await Update(accessCode,false);
-            return accessCode;
-        }
 
-        /// <summary>
-        /// Generates a new ticked code
-        /// </summary>
-        /// <param name="lastTicket"></param>
-        /// <returns></returns>
-        public int generateTicketCode(int lastTicket)
-        {
-            return lastTicket++;
+            var result =  (await _jumpTheQueueContext.AccessCodes.AddAsync(accessCode)).Entity;
+
+
+            return result;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
         /// </summary>
         /// <param name="visitor"></param>
         /// <returns></returns>
-        public Task<Visitor> CreateVisitor(VisitorDto visitor);
+        public Task<Visitor> CreateVisitor(VisitorCmd visitor);
         /// <summary>
         /// Get Visitor by Id
         /// </summary>
@@ -39,12 +39,12 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
         /// Decrease number of customers of the queue and update the queue.
         /// </summary>
         /// <param name="queueId">id of the queue to decrease customer.</param>
-        public Task DecreaseQueueCustomer(int queueId);
+        public Task DecreaseQueueCustomer(AccessCode access);
         /// <summary>
         /// Increase number of customers of the queue and update the queue.
         /// </summary>
         /// <param name="queueId">id of the queue to increase customer.</param>
-        public Task IncreaseQueueCustomer(int queueId);
+        public Task IncreaseQueueCustomer(AccessCode access);
         #endregion
         #region AccessCode
         Task<IList<AccessCode>> GetAccessCodes(Expression<Func<AccessCode, bool>> predicate = null);

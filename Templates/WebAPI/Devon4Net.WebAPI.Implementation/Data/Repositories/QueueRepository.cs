@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Devon4Net.WebAPI.Implementation.Data.Repositories
 {
-    public class QueueRepository : Repository<Queue>, IQueueRepository
+    public class QueueRepository :  IQueueRepository
     {
         private readonly JumpTheQueueContext _jumpTheQueueContext;
-        public QueueRepository(JumpTheQueueContext jumpTheQueueContext, bool dbContextBehaviour = true) : base(jumpTheQueueContext, dbContextBehaviour)
+        public QueueRepository(JumpTheQueueContext jumpTheQueueContext) 
         {
             _jumpTheQueueContext = jumpTheQueueContext;
         }
@@ -27,13 +27,16 @@ namespace Devon4Net.WebAPI.Implementation.Data.Repositories
         public async Task<Queue> GetQueueById(int id)
         {
             Devon4NetLogger.Debug($"GetQueueById method from repository QueeuService with value : {id}");
-            return await _jumpTheQueueContext.DailyQueues.FirstOrDefaultAsync(v => v.QueueId == id);
+            var queue=  await _jumpTheQueueContext.DailyQueues
+                .Include(a => a.AccessCodes)
+                .FirstOrDefaultAsync(q => q.QueueId == id);
+
+            return queue;
         }
 
-        public async Task<Queue> UpdateQueue(Queue queue)
+        public void UpdateQueue(Queue queue)
         {
-            
-            return await Update(queue);
+              _jumpTheQueueContext.Update(queue);
         }
     }
 }

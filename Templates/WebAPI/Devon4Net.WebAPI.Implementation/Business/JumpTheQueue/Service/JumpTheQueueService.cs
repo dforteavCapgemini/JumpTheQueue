@@ -1,9 +1,11 @@
 ﻿using Devon4Net.Domain.UnitOfWork.Service;
 using Devon4Net.Domain.UnitOfWork.UnitOfWork;
+using Devon4Net.Infrastructure.Common.Exceptions;
 using Devon4Net.Infrastructure.Log;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Cmd;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Converters;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto;
+using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Exceptions;
 using Devon4Net.WebAPI.Implementation.Data.Repositories;
 using Devon4Net.WebAPI.Implementation.Domain.Database;
 using Devon4Net.WebAPI.Implementation.Domain.Entities;
@@ -33,16 +35,8 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
         }
 
         #region Visitor
-        public async Task<Visitor> CreateVisitor(VisitorDto visitor)
+        public async Task<Visitor> CreateVisitor(VisitorCmd visitor)
         {
-
-            Devon4NetLogger.Debug($"SetTodo method from service JumpTheQueueService with value : {visitor}");
-
-            if (string.IsNullOrEmpty(visitor.Name) )
-            {
-                throw new ArgumentException("The 'Name' field can not be null or empty.");
-            }
-
             var result = await _unitOfWorkJumpTheQueue.VisitorRepository.Create(visitor);
             await _unitOfWorkJumpTheQueue.SaveChanges();
             return result;
@@ -50,13 +44,18 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
 
         public async Task DeleteVisitorById(int id)
         {
-            Devon4NetLogger.Debug($"DeleteVisitorById method from service VisitorService with value : {id}");
-            var todo = await _unitOfWorkJumpTheQueue.VisitorRepository.GetFirstOrDefault(t => t.VisitorId == id).ConfigureAwait(false);
+            var visitorToDelete = await _unitOfWorkJumpTheQueue.VisitorRepository.GetVisitorById(id);
 
-            if (todo == null)
+            if (visitorToDelete == null)
             {
                 throw new ArgumentException($"The provided Id {id} does not exists");
             }
+
+            if (visitorToDelete.AccessCode != null)
+            {
+                throw new JumpTheQueueException("You can´t delete a visitor if it has a AccessCode.");
+            }
+
 
             await _unitOfWorkJumpTheQueue.VisitorRepository.DeleteVisitorById(id).ConfigureAwait(false);
             await _unitOfWorkJumpTheQueue.SaveChanges();
@@ -69,30 +68,38 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
 
         public async Task<IEnumerable<VisitorDto>> GetVisitors()
         {
-            var result = await _unitOfWorkJumpTheQueue.VisitorRepository.GetVisitors(v => v.UserType == true).ConfigureAwait(false);
+            var result = await _unitOfWorkJumpTheQueue.VisitorRepository.GetVisitors(v => v.UserType.Equals(true));
             return result.Select(VisitorConverter.ModelToDto);
         }
         #endregion 
 
         #region Queue
-        public async Task DecreaseQueueCustomer(int queueId)
+        public async Task DecreaseQueueCustomer(AccessCode accessCode)
         {
-            Queue queueEntity = await _unitOfWorkJumpTheQueue.QueueRepository.GetFirstOrDefault(queue => queue.QueueId.Equals(queueId));
+            var queue = await _unitOfWorkJumpTheQueue.QueueRepository.GetQueueById(accessCode.DailyQueue.QueueId);
 
-            // the customers gets increase by one
-            queueEntity.Customers--;
+            queue.Customers--;
+            queue.CurrentNumber = queue.AccessCodes
+                                            .Where(a => a.AccessCodeId != accessCode.AccessCodeId)
+                                            .OrderBy(a => a.TicketNumber)
+                                            .FirstOrDefault().TicketNumber;
 
-            await _unitOfWorkJumpTheQueue.QueueRepository.UpdateQueue(queueEntity);
+
+             _unitOfWorkJumpTheQueue.QueueRepository.UpdateQueue(queue);
+
         }
 
-        public async Task IncreaseQueueCustomer(int queueId)
+        public async Task IncreaseQueueCustomer(AccessCode accessCode)
         {
-            Queue queueEntity = await _unitOfWorkJumpTheQueue.QueueRepository.GetQueueById(queueId); ;
+            var queue = await _unitOfWorkJumpTheQueue.QueueRepository.GetQueueById(accessCode.DailyQueue.QueueId);
 
-            // the customers gets reduced by one
-            queueEntity.Customers++;
+            queue.Customers++;
+            queue.CurrentNumber = accessCode.DailyQueue.AccessCodes
+                                                    .OrderBy(a => a.TicketNumber)
+                                                    .FirstOrDefault().TicketNumber;
 
-            await _unitOfWorkJumpTheQueue.QueueRepository.UpdateQueue(queueEntity);
+            _unitOfWorkJumpTheQueue.QueueRepository.UpdateQueue(queue);
+
         }
 
         #endregion
@@ -102,24 +109,34 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
         {
             if (accessCodDto.VisitorId < 1 || accessCodDto.QueueId < 1)
             {
-                throw new ArgumentException($"Falta información. VisitorId :{accessCodDto.VisitorId} QueueId: {accessCodDto.QueueId}");
+                throw new JumpTheQueueException($"Falta información. VisitorId :{accessCodDto.VisitorId} QueueId: {accessCodDto.QueueId}");
             }
 
             var queueSearch = await _unitOfWorkJumpTheQueue.QueueRepository.GetQueueById(accessCodDto.QueueId);
          
             if(queueSearch is null)
             {
-                throw new Exception($"No hemos podido localizar la queue con Id: {accessCodDto.QueueId}");
+                throw new JumpTheQueueException($"No hemos podido localizar la queue con Id: {accessCodDto.QueueId}");
             }
 
             AccessCode accessCodeEToSearch = await _unitOfWorkJumpTheQueue.AccessCodeRepository.GetAccessCodeById(accessCodDto.VisitorId);
 
             if (accessCodeEToSearch != null)
             {
-                throw new Exception($"No podemos assignar un codigo de acceso al visitorId{accessCodDto.VisitorId} ya que dispone de uno");
+                throw new JumpTheQueueException($"No podemos assignar un codigo de acceso al visitorId{accessCodDto.VisitorId} ya que dispone de uno");
             }
 
             Visitor visitorSearch = await _unitOfWorkJumpTheQueue.VisitorRepository.GetVisitorById(accessCodDto.VisitorId);
+
+            if (visitorSearch == null)
+            {
+                throw new JumpTheQueueException($"Visitor not found");
+            }
+
+            if (!visitorSearch.UserType)
+            {
+                throw new JumpTheQueueException($"UserType not accepted");
+            }
 
             AccessCode accessCode = new AccessCode
             {
@@ -130,7 +147,7 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
 
             await _unitOfWorkJumpTheQueue.AccessCodeRepository.CreateAccessCode(accessCode);
 
-            await IncreaseQueueCustomer(accessCode.DailyQueueId);
+            await IncreaseQueueCustomer(accessCode);
 
             await _unitOfWorkJumpTheQueue.SaveChanges();
 
@@ -142,10 +159,15 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
         }
         public async Task DeleteAccessCodeById(int accessCodeId)
         {
-            // we get the queueId using the AccessCodeRepository
-            int DailyQueueId = (await _unitOfWorkJumpTheQueue.AccessCodeRepository.GetFirstOrDefault(AccessCode => AccessCode.AccessCodeId.Equals(accessCodeId))).DailyQueueId;
-            await DecreaseQueueCustomer(DailyQueueId);
-            await _unitOfWorkJumpTheQueue.AccessCodeRepository.DeleteAccessCodeById(accessCodeId);
+             var AccessCode = await _unitOfWorkJumpTheQueue.AccessCodeRepository.GetAccessCodeById(accessCodeId);
+
+            if (AccessCode?.DailyQueue?.QueueId == null)
+            {
+                throw new JumpTheQueueException("Access code is not found or it dont have a valid queue assigned");
+            }
+
+            await DecreaseQueueCustomer(AccessCode);
+            await _unitOfWorkJumpTheQueue.AccessCodeRepository.DeleteAccessCode(AccessCode);
             await _unitOfWorkJumpTheQueue.SaveChanges();
         }
         #endregion

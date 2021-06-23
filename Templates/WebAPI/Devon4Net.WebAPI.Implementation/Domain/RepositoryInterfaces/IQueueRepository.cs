@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces
 {
-    public interface IQueueRepository : IRepository<Queue>
+    public interface IQueueRepository 
     {
         public Task<Queue> GetQueueById(int id);
-        public Task<Queue> UpdateQueue(Queue queue);
+        public void UpdateQueue(Queue queue);
     }
 }

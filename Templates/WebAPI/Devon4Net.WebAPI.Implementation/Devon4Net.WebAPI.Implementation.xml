@@ -541,7 +541,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers.JumpTheQueueController.CreateVisitor(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto.VisitorDto)">
+        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers.JumpTheQueueController.CreateVisitor(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Cmd.VisitorCmd)">
             <summary>
             Creates a new Visitor
             </summary>
@@ -571,7 +571,12 @@
             <param name="visitor"></param>
             <returns></returns>
         </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service.IJumpTheQueueService.CreateVisitor(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto.VisitorDto)">
+        <member name="T:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Exceptions.JumpTheQueueException">
+            <summary>
+            Custom exception JumpTheQueueException
+            </summary>
+        </member>
+        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service.IJumpTheQueueService.CreateVisitor(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Cmd.VisitorCmd)">
             <summary>
             Create a Visitor
             </summary>
@@ -599,13 +604,13 @@
             <param name="predicate"></param>
             <returns></returns>
         </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service.IJumpTheQueueService.DecreaseQueueCustomer(System.Int32)">
+        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service.IJumpTheQueueService.DecreaseQueueCustomer(Devon4Net.WebAPI.Implementation.Domain.Entities.AccessCode)">
             <summary>
             Decrease number of customers of the queue and update the queue.
             </summary>
             <param name="queueId">id of the queue to decrease customer.</param>
         </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service.IJumpTheQueueService.IncreaseQueueCustomer(System.Int32)">
+        <member name="M:Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service.IJumpTheQueueService.IncreaseQueueCustomer(Devon4Net.WebAPI.Implementation.Domain.Entities.AccessCode)">
             <summary>
             Increase number of customers of the queue and update the queue.
             </summary>
@@ -970,20 +975,6 @@
             <param name="services"></param>
             <param name="configuration"></param>
         </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Data.Repositories.AccessCodeRepository.GetAccessCodeById(System.Int32)">
-            <summary>
-            Get AccessCode  by Id
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Data.Repositories.AccessCodeRepository.generateTicketCode(System.Int32)">
-            <summary>
-            Generates a new ticked code
-            </summary>
-            <param name="lastTicket"></param>
-            <returns></returns>
-        </member>
         <member name="T:Devon4Net.WebAPI.Implementation.Data.Repositories.EmployeeRepository">
             <summary>
             Repository implementation for the Employee
@@ -1024,11 +1015,6 @@
             </summary>
             <param name="id"></param>
             <returns></returns>
-        </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Data.Repositories.IUnitOfWorkJumpTheQueue.SaveChanges(System.Threading.CancellationToken)">
-            <summary>
-            Hace persistentes los cambios en el repositorio.
-            </summary>
         </member>
         <member name="M:Devon4Net.WebAPI.Implementation.Data.Repositories.QueueRepository.GetQueueById(System.Int32)">
             <summary>
@@ -1089,7 +1075,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Data.Repositories.VisitorRepository.Create(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto.VisitorDto)">
+        <member name="M:Devon4Net.WebAPI.Implementation.Data.Repositories.VisitorRepository.Create(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Cmd.VisitorCmd)">
             <summary>
             Create a new Visitor
             </summary>
@@ -1229,9 +1215,9 @@
             <param name="accessCodeEto"></param>
             <returns></returns>
         </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IAccessCodeRepository.DeleteAccessCodeById(System.Int32)">
+        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IAccessCodeRepository.DeleteAccessCode(Devon4Net.WebAPI.Implementation.Domain.Entities.AccessCode)">
             <summary>
-            DeleteAccessCodeById
+            Delete AccessCode
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -1318,7 +1304,7 @@
             <param name="id">identificador del visitante</param>
             <returns></returns>
         </member>
-        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.Create(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto.VisitorDto)">
+        <member name="M:Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces.IVisitorRepository.Create(Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Cmd.VisitorCmd)">
             <summary>
             Create
             </summary>

@@ -6,9 +6,8 @@ using Devon4Net.WebAPI.Implementation.Domain.Entities;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers
@@ -41,8 +40,7 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetVisitors()
         {
-            Devon4NetLogger.Debug("Executing GetVisitors from controller JumpTheQueueController");
-            return Ok(await _JumpTheQueueService.GetVisitors().ConfigureAwait(false));
+            return Ok(await _JumpTheQueueService.GetVisitors());
         }
 
 
@@ -55,11 +53,20 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers
         [ProducesResponseType(typeof(Visitor), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> CreateVisitor([FromBody] VisitorDto visitorDto)
+        public async Task<ActionResult> CreateVisitor([FromBody] VisitorCmd visitorCmd)
         {
-            Devon4NetLogger.Debug("Executing GetTodo from controller TodoController");
-            var result = await _JumpTheQueueService.CreateVisitor(visitorDto).ConfigureAwait(false);
-            return StatusCode(StatusCodes.Status201Created, result);
+
+            VisitorCmdValidator validations = new VisitorCmdValidator(visitorCmd);
+            var result = validations.Validate(visitorCmd);
+
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors.Select(x => x.ErrorMessage).ToArray());
+            }
+
+            var visitorDto = await _JumpTheQueueService.CreateVisitor(visitorCmd);
+
+            return CreatedAtAction(nameof(CreateVisitor), visitorDto);
         }
 
 
@@ -76,7 +83,7 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Controllers
         public async Task<ActionResult> DeleteVisitor(int visitorId)
         {
             Devon4NetLogger.Debug("Executing GetTodo from controller TodoController");
-            await _JumpTheQueueService.DeleteVisitorById(visitorId).ConfigureAwait(false);
+            await _JumpTheQueueService.DeleteVisitorById(visitorId);
             return Ok();
         }
      

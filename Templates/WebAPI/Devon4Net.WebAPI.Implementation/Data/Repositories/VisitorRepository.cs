@@ -1,5 +1,6 @@
 ﻿using Devon4Net.Domain.UnitOfWork.Repository;
 using Devon4Net.Infrastructure.Log;
+using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Cmd;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Validators;
 using Devon4Net.WebAPI.Implementation.Domain.Database;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Devon4Net.WebAPI.Implementation.Data.Repositories
 {
-    public class VisitorRepository : Repository<Visitor>, IVisitorRepository
+    public class VisitorRepository :  IVisitorRepository
     {
         private readonly JumpTheQueueContext _jumpTheQueueContext;
 
@@ -23,7 +24,7 @@ namespace Devon4Net.WebAPI.Implementation.Data.Repositories
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public VisitorRepository(JumpTheQueueContext context, bool dbContextBehaviour = true) : base(context, dbContextBehaviour)
+        public VisitorRepository(JumpTheQueueContext context, bool dbContextBehaviour = true) 
         {
             _jumpTheQueueContext = context;
         }
@@ -35,38 +36,43 @@ namespace Devon4Net.WebAPI.Implementation.Data.Repositories
         public async Task<Visitor> GetVisitorById(int id)
         {
             Devon4NetLogger.Debug($"GetVisitorById method from repository VisitorService with value : {id}");
-            return await _jumpTheQueueContext.Visitors.FirstOrDefaultAsync(v => v.VisitorId == id);
+            return await _jumpTheQueueContext.Visitors
+                .Include(v => v.AccessCode)
+                .FirstOrDefaultAsync(v => v.VisitorId == id);
         }
         /// <summary>
         /// Create a new Visitor
         /// </summary>
         /// <param name="visitorDto"></param>
         /// <returns></returns>
-        public Task<Visitor> Create(VisitorDto visitorDto)
+        public async Task<Visitor> Create(VisitorCmd visitorCmd)
         {
-            Devon4NetLogger.Debug($"Create method from repository JumpTheQueueService with value : {visitorDto}");
+            Devon4NetLogger.Debug($"Create method from repository JumpTheQueueService with value : {visitorCmd}");
 
 
             Visitor visitor = new Visitor
             {
-                Name = visitorDto.Name,
-                Username = visitorDto.UserName,
-                Password = visitorDto.Password,
-                PhoneNumber = visitorDto.PhoneNumber,
-                AcceptedTerms = visitorDto.AcceptedTerms,
-                AcceptedCommercial = visitorDto.AcceptedCommercial,
-                UserType = visitorDto.UserType
+                Name = visitorCmd.Name,
+                Username = visitorCmd.UserName,
+                Password = visitorCmd.Password,
+                PhoneNumber = visitorCmd.PhoneNumber,
+                AcceptedTerms = visitorCmd.AcceptedTerms,
+                AcceptedCommercial = visitorCmd.AcceptedCommercial,
+                UserType = visitorCmd.UserType
             };
-
-
-            return Create(visitor,false);
+             return (await _jumpTheQueueContext.Visitors.AddAsync(visitor)).Entity;
         }
       
         public async Task<IList<Visitor>> GetVisitors(Expression<Func<Visitor, bool>> predicate = null)
         {
  
             Devon4NetLogger.Debug("GetVisitors method from VisitorRespository VisitorService");
-            return await _jumpTheQueueContext.Visitors.Where(predicate).Include(v => v.AccessCode).ToListAsync();
+            return 
+                await _jumpTheQueueContext.Visitors
+                .Where(predicate)
+                .Include(v => v.AccessCode)
+                .ThenInclude(q => q.DailyQueue)
+                .ToListAsync();
         }
 
         public async Task DeleteVisitorById(int id)
