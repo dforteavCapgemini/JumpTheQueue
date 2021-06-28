@@ -78,11 +78,13 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
         {
             var queue = await _unitOfWorkJumpTheQueue.QueueRepository.GetQueueById(accessCode.DailyQueue.QueueId);
 
-            queue.Customers--;
+            queue.Customers = queue.AccessCodes.Count() - 1;
             queue.CurrentNumber = queue.AccessCodes
                                             .Where(a => a.AccessCodeId != accessCode.AccessCodeId)
                                             .OrderBy(a => a.TicketNumber)
-                                            .FirstOrDefault().TicketNumber;
+                                            .FirstOrDefault()?.TicketNumber ?? 0;
+
+            
 
 
              _unitOfWorkJumpTheQueue.QueueRepository.UpdateQueue(queue);
@@ -93,7 +95,7 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
         {
             var queue = await _unitOfWorkJumpTheQueue.QueueRepository.GetQueueById(accessCode.DailyQueue.QueueId);
 
-            queue.Customers++;
+            queue.Customers = queue.AccessCodes.Count() +1;
             queue.CurrentNumber = accessCode.DailyQueue.AccessCodes
                                                     .OrderBy(a => a.TicketNumber)
                                                     .FirstOrDefault().TicketNumber;

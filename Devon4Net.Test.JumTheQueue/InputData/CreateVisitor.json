@@ -1,0 +1,9 @@
+{
+  "name": "TestUsuario",
+  "userName": "test@gmail.com",
+  "password": "string",
+  "phoneNumber": "string",
+  "acceptedCommercial": true,
+  "acceptedTerms": true,
+  "userType": true
+}

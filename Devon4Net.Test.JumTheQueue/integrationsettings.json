@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "JumpTheQueue_INT": "Data Source=.;Initial Catalog=JumpTheQueue_INT;Integrated Security=True"
+  }
+}
