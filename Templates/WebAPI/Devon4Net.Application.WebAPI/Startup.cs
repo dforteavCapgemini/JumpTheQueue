@@ -48,10 +48,10 @@ namespace Devon4Net.Application.WebAPI
             app.UseHsts();
             app.UseStaticFiles();
             app.ConfigureDevonFw();
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseMvc();
         }
     }

@@ -28,56 +28,62 @@ namespace Devon4Net.Application.WebAPI.Configuration.Application
             int.TryParse(configuration["devonfw:Kestrel:Http2InitialStreamWindowSize"], out int http2InitialStreamWindowSize);
             bool.TryParse(configuration["devonfw:Kestrel:AllowSynchronousIO"], out bool allowSynchronousIO);
 
+            //webBuilder.UseKestrel(options =>
+            //{
+            //    options.AddServerHeader = false;
+            //    options.Listen(IPAddress.Any, applicationPort, listenOptions =>
+            //    {                    
+            //        listenOptions.Protocols = GetHttProtocol(httpProtocol);
+
+            //        options.Limits.MaxConcurrentConnections = maxConcurrentConnections;
+            //        options.Limits.MaxConcurrentUpgradedConnections = maxConcurrentUpgradedConnections;
+            //        options.Limits.KeepAliveTimeout = TimeSpan.FromSeconds(keepAliveTimeout);
+
+            //        if (maxRequestBodySize >= 1 && maxRequestBodySize <= 28.6)
+            //        {
+            //            options.Limits.MaxRequestBodySize = maxRequestBodySize * 1048576;
+            //        }
+
+            //        options.Limits.Http2.MaxStreamsPerConnection = http2MaxStreamsPerConnection;
+            //        if (Http2InitialConnectionWindowSize >= 65535 && Http2InitialConnectionWindowSize <= Math.Pow(2,31))
+            //        {
+            //            options.Limits.Http2.InitialConnectionWindowSize = Http2InitialConnectionWindowSize;
+            //        }
+
+            //        if (http2InitialStreamWindowSize >= 65535 && http2InitialStreamWindowSize <= Math.Pow(2, 31))
+            //        {
+            //            options.Limits.Http2.InitialStreamWindowSize = http2InitialStreamWindowSize;
+            //        }
+
+            //        options.AllowSynchronousIO = allowSynchronousIO;
+
+
+            //        if (!useHttps) return;
+                    
+            //        var httpsOptions = new HttpsConnectionAdapterOptions();
+            //        var kestrelCertificate = configuration["devonfw:Kestrel:ServerCertificate:Certificate"];
+            //        bool.TryParse(configuration["devonfw:Kestrel:ClientCertificate:RequireClientCertificate"], out bool requireClientCertificate);
+            //        bool.TryParse(configuration["devonfw:Kestrel:ClientCertificate:CheckCertificateRevocation"], out bool checkCertificateRevocation);
+
+            //        httpsOptions.SslProtocols = GetTlsProtocol(sslProtocol);
+
+            //        httpsOptions.ClientCertificateMode = requireClientCertificate ? ClientCertificateMode.RequireCertificate : ClientCertificateMode.NoCertificate;
+            //        httpsOptions.CheckCertificateRevocation = checkCertificateRevocation;
+
+            //        if (!string.IsNullOrEmpty(kestrelCertificate))
+            //        {
+            //            var kestrelCertificatePassword = configuration["devonfw:Kestrel:ServerCertificate:CertificatePassword"];
+            //            httpsOptions.ServerCertificate = LoadServerCertificate(kestrelCertificate, kestrelCertificatePassword);
+            //        }
+
+            //        listenOptions.UseHttps(httpsOptions);
+            //    });
+            //});
+
             webBuilder.UseKestrel(options =>
             {
-                options.AddServerHeader = false;
-                options.Listen(IPAddress.Any, applicationPort, listenOptions =>
-                {                    
-                    listenOptions.Protocols = GetHttProtocol(httpProtocol);
-
-                    options.Limits.MaxConcurrentConnections = maxConcurrentConnections;
-                    options.Limits.MaxConcurrentUpgradedConnections = maxConcurrentUpgradedConnections;
-                    options.Limits.KeepAliveTimeout = TimeSpan.FromSeconds(keepAliveTimeout);
-
-                    if (maxRequestBodySize >= 1 && maxRequestBodySize <= 28.6)
-                    {
-                        options.Limits.MaxRequestBodySize = maxRequestBodySize * 1048576;
-                    }
-
-                    options.Limits.Http2.MaxStreamsPerConnection = http2MaxStreamsPerConnection;
-                    if (Http2InitialConnectionWindowSize >= 65535 && Http2InitialConnectionWindowSize <= Math.Pow(2,31))
-                    {
-                        options.Limits.Http2.InitialConnectionWindowSize = Http2InitialConnectionWindowSize;
-                    }
-
-                    if (http2InitialStreamWindowSize >= 65535 && http2InitialStreamWindowSize <= Math.Pow(2, 31))
-                    {
-                        options.Limits.Http2.InitialStreamWindowSize = http2InitialStreamWindowSize;
-                    }
-
-                    options.AllowSynchronousIO = allowSynchronousIO;
-
-
-                    if (!useHttps) return;
-                    
-                    var httpsOptions = new HttpsConnectionAdapterOptions();
-                    var kestrelCertificate = configuration["devonfw:Kestrel:ServerCertificate:Certificate"];
-                    bool.TryParse(configuration["devonfw:Kestrel:ClientCertificate:RequireClientCertificate"], out bool requireClientCertificate);
-                    bool.TryParse(configuration["devonfw:Kestrel:ClientCertificate:CheckCertificateRevocation"], out bool checkCertificateRevocation);
-
-                    httpsOptions.SslProtocols = GetTlsProtocol(sslProtocol);
-
-                    httpsOptions.ClientCertificateMode = requireClientCertificate ? ClientCertificateMode.RequireCertificate : ClientCertificateMode.NoCertificate;
-                    httpsOptions.CheckCertificateRevocation = checkCertificateRevocation;
-
-                    if (!string.IsNullOrEmpty(kestrelCertificate))
-                    {
-                        var kestrelCertificatePassword = configuration["devonfw:Kestrel:ServerCertificate:CertificatePassword"];
-                        httpsOptions.ServerCertificate = LoadServerCertificate(kestrelCertificate, kestrelCertificatePassword);
-                    }
-
-                    listenOptions.UseHttps(httpsOptions);
-                });
+                options.Listen(IPAddress.Loopback, applicationPort); //HTTP port
+               // options.Listen(IPAddress.Loopback, applicationPort + 1); //HTTPS port
             });
         }
 
