@@ -4,6 +4,9 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <StartupObject>Devon4Net.Application.WebAPI.Program</StartupObject>
         <Version>3.1.5</Version>
+        <UserSecretsId>eb93ab0a-a587-4769-a1d8-be37b6bbadc0</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerfileContext>..\..\..</DockerfileContext>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -28,6 +31,7 @@
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.10" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.10" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.10" />
+      <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
       <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.10" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
