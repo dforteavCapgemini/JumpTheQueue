@@ -27,11 +27,7 @@ namespace Devon4Net.Test.JumTheQueue
         {
             _factory = fixture;
             _client = _factory.CreateClient();
-            var cn = new SqlConnectionStringBuilder(_factory.Configuration.GetConnectionString("JumpTheQueue_INT")); 
-            cn.ConnectTimeout = 60; 
-            _checkpoint.Reset(cn.ToString()).Wait();
-
-           // _checkpoint.Reset(_factory.Configuration.GetConnectionString("JumpTheQueue_INT")).Wait();
+            _checkpoint.Reset(_factory.Configuration.GetConnectionString("JumpTheQueue_INT")).Wait();
         }
     }
 

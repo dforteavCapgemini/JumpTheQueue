@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  devon4net.application.webapi:
+    image: ${DOCKER_REGISTRY-}devon4netapplicationwebapi
+    build:
+      context: .
+      dockerfile: Templates/WebAPI/Devon4Net.Application.WebAPI/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:1500
+    ports:
+      - "1500:1500"
+    networks:
+      - jumpthequeue
+
+
+  jumthequeuesql:
+    image: mcr.microsoft.com/mssql/server
+    restart: always
+    ports:
+      - "1430:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=SQl0nLinux?!
+    networks:
+      - jumpthequeue
+
+
+networks:
+  jumpthequeue: {}
+

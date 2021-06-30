@@ -1,5 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Security.Claims;
+using System.Threading;
 using Devon4Net.Application.WebAPI.Configuration;
 using Devon4Net.Domain.UnitOfWork.Common;
 using Devon4Net.Domain.UnitOfWork.Enums;
@@ -115,10 +117,20 @@ namespace Devon4Net.WebAPI.Implementation.Configure
             services.SetupDatabase<JumpTheQueueContext>(configuration, "JumpTheQueue",DatabaseType.SqlServer,serviceLifetime:ServiceLifetime.Scoped);
             services.SetupDatabase<TodoContext>(configuration, "Default", DatabaseType.InMemory);
             services.SetupDatabase<EmployeeContext>(configuration, "Employee", DatabaseType.InMemory);
+            try
+            {
+                using var jumpTheQueueContext = services.BuildServiceProvider().GetService<IServiceScopeFactory>().CreateScope().ServiceProvider.GetService<JumpTheQueueContext>();
+                //jumpTheQueueContext.Database.EnsureDeleted();
+                jumpTheQueueContext.Database.Migrate();
+            }
+            catch (System.Exception)
+            {
 
-            //using var jumpTheQueueContext = services.BuildServiceProvider().GetService<IServiceScopeFactory>().CreateScope().ServiceProvider.GetService<JumpTheQueueContext>();
-            //jumpTheQueueContext.Database.EnsureDeleted();
-            //jumpTheQueueContext.Database.Migrate();
+                // If the database is not available yet just wait and try again
+                Thread.Sleep(TimeSpan.FromSeconds(15));
+                SetupDatabase(ref services, ref configuration);
+            }
+           
         }
 
         private static void SetupJwtPolicies(ref IServiceCollection services)

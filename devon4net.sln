@@ -85,7 +85,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devon4Net.Infrastructure.We
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{2658425C-B246-47FB-97B6-DDE2A9329A1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devon4Net.Test.JumTheQueue", "Devon4Net.Test.JumTheQueue\Devon4Net.Test.JumTheQueue.csproj", "{4BDCA38A-7BE5-4A74-8B67-39447276C2A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devon4Net.Test.JumTheQueue", "Devon4Net.Test.JumTheQueue\Devon4Net.Test.JumTheQueue.csproj", "{4BDCA38A-7BE5-4A74-8B67-39447276C2A5}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1A2C97E7-8251-4C04-8061-203B7CCF6C62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -229,6 +231,10 @@ Global
 		{4BDCA38A-7BE5-4A74-8B67-39447276C2A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BDCA38A-7BE5-4A74-8B67-39447276C2A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BDCA38A-7BE5-4A74-8B67-39447276C2A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A2C97E7-8251-4C04-8061-203B7CCF6C62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A2C97E7-8251-4C04-8061-203B7CCF6C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A2C97E7-8251-4C04-8061-203B7CCF6C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A2C97E7-8251-4C04-8061-203B7CCF6C62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
