@@ -1,0 +1,1 @@
+C:\Repositorios\devon4net\source\Templates\WebAPI\Devon4Net.Application.WebAPI\.sonarqube\out\7
