@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
     <IsPackable>false</IsPackable>
+	<!-- Project is not a test project -->
+	<SonarQubeTestProject>true</SonarQubeTestProject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="integrationsettings.json">
+    <Content Include="IntegrationTest\integrationsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="xunit.runner.json">
@@ -22,12 +23,13 @@
 
   <ItemGroup>
 	  <PackageReference Include="FluentAssertions" Version="5.10.3" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.10" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.10" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.10" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
 	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
-	  <PackageReference Include="Moq" Version="4.15.1" />
+	  <PackageReference Include="Moq" Version="4.16.1" />
 	  <PackageReference Include="Respawn" Version="4.0.0" />
 	  <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
 	  <PackageReference Include="xunit" Version="2.4.1" />

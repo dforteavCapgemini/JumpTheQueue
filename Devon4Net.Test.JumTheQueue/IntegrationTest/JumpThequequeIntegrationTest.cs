@@ -13,12 +13,12 @@ using System.IO;
 using Devon4Net.WebAPI.Implementation.Domain.Entities;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Cmd;
 
-namespace Devon4Net.Test.JumTheQueue
+namespace Devon4Net.Test.JumTheQueue.IntegrationTest
 {
-    public class JumpThequequeTests : IntegrationTest
+    public class JumpThequequeIntegrationTest : IntegrationTest
     {
 
-        public JumpThequequeTests(ApiWebApplicationFactory fixture) : base(fixture) { }
+        public JumpThequequeIntegrationTest(ApiWebApplicationFactory fixture) : base(fixture) { }
 
         [Fact]
         public async Task CreateVisitor()

@@ -12,7 +12,7 @@ using System.Configuration;
 using System.IO;
 using System.Text;
 
-namespace Devon4Net.Test.JumTheQueue
+namespace Devon4Net.Test.JumTheQueue.IntegrationTest
 {
     public class ApiWebApplicationFactory : WebApplicationFactory<Startup>
     {
@@ -23,20 +23,11 @@ namespace Devon4Net.Test.JumTheQueue
             builder.ConfigureAppConfiguration(config =>
             {
                 Configuration = new ConfigurationBuilder()
-               .SetBasePath(Directory.GetCurrentDirectory())
+               .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(),"IntegrationTest"))
                .AddJsonFile("integrationsettings.json")
                .Build();
 
                 config.AddConfiguration(Configuration);
-            });
-
-
-            
-
-            // will be called after the `ConfigureServices` from the Startup
-            builder.ConfigureTestServices(services =>
-            {
-                services.AddTransient<IJumpTheQueueService, JumpTheQueueService>();
             });
         }
     }

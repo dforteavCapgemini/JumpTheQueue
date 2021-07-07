@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Devon4Net.Test.JumTheQueue
+namespace Devon4Net.Test.JumTheQueue.IntegrationTest
 {
     public abstract class IntegrationTest : IClassFixture<ApiWebApplicationFactory>
     {
