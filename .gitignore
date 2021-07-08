@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignore Files sonarqube
+Templates/WebAPI/Devon4Net.Application.WebAPI/.sonarqube/
+Devon4Net.Test.JumTheQueue/.sonarqube/
+

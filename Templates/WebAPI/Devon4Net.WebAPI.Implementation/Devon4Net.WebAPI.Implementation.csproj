@@ -62,6 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
+
     <Folder Include="Business\SmaxHcmrManagement\Dto\" />
     <Folder Include="Business\SmaxHcmrManagement\Exceptions\" />
   </ItemGroup>

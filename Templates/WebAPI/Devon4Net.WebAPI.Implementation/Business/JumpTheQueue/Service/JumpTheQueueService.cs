@@ -80,7 +80,7 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
         {
             var queue = await _unitOfWorkJumpTheQueue.QueueRepository.GetQueueById(accessCode.DailyQueueId);
 
-            queue.Customers = queue.AccessCodes.Count() - 1;
+            queue.Customers = queue.AccessCodes.Count - 1;
             queue.CurrentNumber = queue.AccessCodes
                                             .Where(a => a.AccessCodeId != accessCode.AccessCodeId)
                                             .OrderBy(a => a.TicketNumber)
@@ -93,7 +93,7 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
         {
             var queue = await _unitOfWorkJumpTheQueue.QueueRepository.GetQueueById(accessCode.DailyQueue.QueueId);
 
-            queue.Customers = queue.AccessCodes.Count() +1;
+            queue.Customers = queue.AccessCodes.Count +1;
             queue.CurrentNumber = accessCode.DailyQueue.AccessCodes
                                                     .OrderBy(a => a.TicketNumber)
                                                     .FirstOrDefault().TicketNumber;
@@ -104,28 +104,28 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
         #endregion
 
         #region AccessCode
-        public async Task<AccessCode> CreateAccessCode(AccessCodeCmd accessCodDto)
+        public async Task<AccessCode> CreateAccessCode(AccessCodeCmd accessCodeCmd)
         {
-            if (accessCodDto.VisitorId < 1 || accessCodDto.QueueId < 1)
+            if (accessCodeCmd.VisitorId < 1 || accessCodeCmd.QueueId < 1)
             {
-                throw new JumpTheQueueException($"Falta información. VisitorId :{accessCodDto.VisitorId} QueueId: {accessCodDto.QueueId}");
+                throw new JumpTheQueueException($"Falta información. VisitorId :{accessCodeCmd.VisitorId} QueueId: {accessCodeCmd.QueueId}");
             }
 
-            var queueSearch = await _unitOfWorkJumpTheQueue.QueueRepository.GetQueueById(accessCodDto.QueueId);
+            var queueSearch = await _unitOfWorkJumpTheQueue.QueueRepository.GetQueueById(accessCodeCmd.QueueId);
          
             if(queueSearch is null)
             {
-                throw new JumpTheQueueException($"No hemos podido localizar la queue con Id: {accessCodDto.QueueId}");
+                throw new JumpTheQueueException($"No hemos podido localizar la queue con Id: {accessCodeCmd.QueueId}");
             }
 
-            AccessCode accessCodeEToSearch = await _unitOfWorkJumpTheQueue.AccessCodeRepository.GetAccessCodeById(accessCodDto.VisitorId);
+            AccessCode accessCodeEToSearch = await _unitOfWorkJumpTheQueue.AccessCodeRepository.GetAccessCodeById(accessCodeCmd.VisitorId);
 
             if (accessCodeEToSearch != null)
             {
-                throw new JumpTheQueueException($"No podemos assignar un codigo de acceso al visitorId{accessCodDto.VisitorId} ya que dispone de uno");
+                throw new JumpTheQueueException($"No podemos assignar un codigo de acceso al visitorId{accessCodeCmd.VisitorId} ya que dispone de uno");
             }
 
-            Visitor visitorSearch = await _unitOfWorkJumpTheQueue.VisitorRepository.GetVisitorById(accessCodDto.VisitorId);
+            Visitor visitorSearch = await _unitOfWorkJumpTheQueue.VisitorRepository.GetVisitorById(accessCodeCmd.VisitorId);
 
             if (visitorSearch == null)
             {

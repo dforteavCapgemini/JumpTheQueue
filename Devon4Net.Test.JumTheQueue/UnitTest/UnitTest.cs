@@ -39,8 +39,8 @@ namespace Devon4Net.Test.JumTheQueue.UnitTest
 
         private void ConfigureFakeData()
         {
-            Visitors = GetAllUsers().Where(v => v.UserType.Equals(true)).ToList();
             AccessCodes = GetAllAccessCodes();
+            Visitors = GetAllUsers().Where(v => v.UserType.Equals(true)).ToList();
             Queues = GetQueues();
             AccessCodeCreatedMocked = GetCreateAccessCode();
         }
@@ -157,16 +157,16 @@ namespace Devon4Net.Test.JumTheQueue.UnitTest
             return new List<Visitor>()
             {
                 new Visitor { VisitorId = -1, Username = "mike@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = false, AcceptedTerms = true,     UserType = false },
-                new Visitor { VisitorId = 1, Username = "peter@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
-                new Visitor { VisitorId = 2, Username = "pablo@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
-                new Visitor { VisitorId = 3, Username = "test1@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
-                new Visitor { VisitorId = 4, Username = "test2@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
-                new Visitor { VisitorId = 5, Username = "test3@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
-                new Visitor { VisitorId = 6, Username = "test4@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
-                new Visitor { VisitorId = 7, Username = "test5@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
-                new Visitor { VisitorId = 8, Username = "test6@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
-                new Visitor { VisitorId = 9, Username = "test7@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true },
-                new Visitor { VisitorId = 10, Username = "true@user.com",   Name = "testUser", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = false, AcceptedTerms = true,   UserType = true }
+                new Visitor { VisitorId = 1, Username = "peter@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true},
+                new Visitor { VisitorId = 2, Username = "pablo@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true},
+                new Visitor { VisitorId = 3, Username = "test1@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true},
+                new Visitor { VisitorId = 4, Username = "test2@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true},
+                new Visitor { VisitorId = 5, Username = "test3@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true},
+                new Visitor { VisitorId = 6, Username = "test4@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true},
+                new Visitor { VisitorId = 7, Username = "test5@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "1", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true},
+                new Visitor { VisitorId = 8, Username = "test6@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true},
+                new Visitor { VisitorId = 9, Username = "test7@mail.com",   Name = "test", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = true, AcceptedTerms = true,      UserType = true},
+                new Visitor { VisitorId = 10, Username = "true@user.com",   Name = "testUser", Password = "123456789", PhoneNumber = "0", AcceptedCommercial = false, AcceptedTerms = true,   UserType = true}
             };
         }
     }

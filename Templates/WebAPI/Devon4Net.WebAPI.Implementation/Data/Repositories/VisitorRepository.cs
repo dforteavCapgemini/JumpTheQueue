@@ -2,7 +2,6 @@
 using Devon4Net.Infrastructure.Log;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Cmd;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Dto;
-using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Validators;
 using Devon4Net.WebAPI.Implementation.Domain.Database;
 using Devon4Net.WebAPI.Implementation.Domain.Entities;
 using Devon4Net.WebAPI.Implementation.Domain.RepositoryInterfaces;

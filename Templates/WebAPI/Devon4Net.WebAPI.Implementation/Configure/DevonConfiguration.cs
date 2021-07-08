@@ -16,7 +16,6 @@ using Devon4Net.Infrastructure.MediatR.Samples.Model;
 using Devon4Net.Infrastructure.MediatR.Samples.Query;
 using Devon4Net.Infrastructure.RabbitMQ.Samples.Handllers;
 using Devon4Net.WebAPI.Implementation.Business.EmployeeManagement.Validators;
-using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Validators;
 using Devon4Net.WebAPI.Implementation.Business.MediatRManagement.Commands;
 using Devon4Net.WebAPI.Implementation.Business.MediatRManagement.Dto;
 using Devon4Net.WebAPI.Implementation.Business.MediatRManagement.Handlers;
@@ -99,7 +98,6 @@ namespace Devon4Net.WebAPI.Implementation.Configure
 
         private static void SetupFluentValidators(ref IServiceCollection services)
         {
-            services.AddFluentValidation<VisitorFluentValidator>(true);
             services.AddFluentValidation<TodosFluentValidator>(true);
             services.AddFluentValidation<EmployeeFluentValidator>(true);
         }

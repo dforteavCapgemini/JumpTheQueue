@@ -10,6 +10,7 @@ using FluentAssertions;
 using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Cmd;
 using System.Threading.Tasks;
 using System;
+using Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Exceptions;
 
 namespace Devon4Net.Test.JumTheQueue.UnitTest
 {
@@ -73,7 +74,7 @@ namespace Devon4Net.Test.JumTheQueue.UnitTest
         {
             // Arrange
             var expected = new List<Visitor>(Visitors);
-            var visitorToRemove = expected.SingleOrDefault(v => v.VisitorId == visitorId);
+            var visitorToRemove = expected.FirstOrDefault(v => v.VisitorId == visitorId);
             expected.Remove(visitorToRemove);
 
             //Act
@@ -81,6 +82,22 @@ namespace Devon4Net.Test.JumTheQueue.UnitTest
 
             //Assert
             Visitors.Should().BeEquivalentTo(expected);
+        }
+
+        [Theory]
+        [InlineData(99)]
+        public async void DeleteVisitorByIdInvalidVisitor(int visitorId)
+        {
+            // Arrange
+            var expected = new List<Visitor>(Visitors);
+            var visitorToRemove = expected.FirstOrDefault(v => v.VisitorId == visitorId);
+            expected.Remove(visitorToRemove);
+
+            //Act
+            Func<Task> act = async () => { await JumpTheQueueService.DeleteVisitorById(visitorId); };
+
+            //Assert
+            await act.Should().ThrowAsync<ArgumentException>();
         }
 
         [Fact]
@@ -162,6 +179,77 @@ namespace Devon4Net.Test.JumTheQueue.UnitTest
         #endregion
 
         #region AccessCodes
+
+        [Fact]
+        public async void CreateAccessCodeInvalidVisitor()
+        {
+            //Arrange
+            AccessCodeCmd accessCodeCmd = new AccessCodeCmd
+            {
+                VisitorId = 0,
+                QueueId = 1
+            };
+
+            //Act
+            Func<Task> act = async () => { await JumpTheQueueService.CreateAccessCode(accessCodeCmd); };
+
+            //Assert
+            await act.Should().ThrowAsync<JumpTheQueueException>();
+        }
+
+        [Fact]
+        public async void CreateAccessCodeInvalidQueue()
+        {
+            //Arrange
+            AccessCodeCmd accessCodeCmd = new AccessCodeCmd
+            {
+                VisitorId = 9,
+                QueueId = 0
+            };
+
+            //Act
+            Func<Task> act = async () => { await JumpTheQueueService.CreateAccessCode(accessCodeCmd); };
+
+            //Assert
+            await act.Should().ThrowAsync<JumpTheQueueException>();
+        }
+
+        [Fact]
+        public async void CreateAccessCodeVisitorHaveAlreadyAccessCode()
+        {
+            //Arrange
+            AccessCodeCmd accessCodeCmd = new AccessCodeCmd
+            {
+                VisitorId = 9,
+                QueueId = 1
+            };
+
+            //Act
+            Func<Task> act = async () => { await JumpTheQueueService.CreateAccessCode(accessCodeCmd); };
+
+            //Assert
+            await act.Should().ThrowAsync<JumpTheQueueException>();
+        }
+
+
+        [Fact]
+        public async void CreateAccessCode()
+        {
+            //Arrange
+            AccessCodeCmd accessCodeCmd = new AccessCodeCmd
+            {
+                VisitorId = 9,
+                QueueId = 1
+            };
+
+            //Act Borramos un AccessCode Para permitir su inserción en 1º lugar
+            await JumpTheQueueService.DeleteAccessCodeById(9);
+            var result = await JumpTheQueueService.CreateAccessCode(accessCodeCmd);
+
+            //Assert
+            result.Should().BeEquivalentTo(AccessCodeCreatedMocked);
+        }
+
         [Fact]
         public async Task GetAccessCodes()
         {
@@ -182,7 +270,7 @@ namespace Devon4Net.Test.JumTheQueue.UnitTest
         {
             // Arrange
             List<AccessCode> expected = new List<AccessCode>(AccessCodes);
-            var accessCodToRemove = expected.SingleOrDefault(a => a.AccessCodeId == accessCodeId);
+            var accessCodToRemove = expected.FirstOrDefault(a => a.AccessCodeId == accessCodeId);
             expected.Remove(accessCodToRemove);
 
             //Act
@@ -192,23 +280,25 @@ namespace Devon4Net.Test.JumTheQueue.UnitTest
             AccessCodes.Should().BeEquivalentTo(expected);
         }
 
-        [Fact]
-        public async void CreateAccessCode()
+        [Theory]
+        [InlineData(11)]
+        [InlineData(22)]
+        public async void DeleteAccessCodeByIdInvalidId(int accessCodeId)
         {
-            //Arrange
-            AccessCodeCmd accessCodeCmd = new AccessCodeCmd
-            {
-                VisitorId = 9,
-                QueueId = 1
-            };
+            // Arrange
+            List<AccessCode> expected = new List<AccessCode>(AccessCodes);
+            var accessCodToRemove = expected.FirstOrDefault(a => a.AccessCodeId == accessCodeId);
+            expected.Remove(accessCodToRemove);
 
-            //Act Borramos un AccessCode Para permitir su inserción en 1º lugar
-            await JumpTheQueueService.DeleteAccessCodeById(9);
-            var result = await JumpTheQueueService.CreateAccessCode(accessCodeCmd);
+
+            //Act
+            Func<Task> act = async () => { await JumpTheQueueService.DeleteAccessCodeById(accessCodeId); };
 
             //Assert
-            result.Should().BeEquivalentTo(AccessCodeCreatedMocked);
+            await act.Should().ThrowAsync<JumpTheQueueException>();
         }
+
+
         #endregion
 
         private Queue CopyQueue(Queue queueOriginal)

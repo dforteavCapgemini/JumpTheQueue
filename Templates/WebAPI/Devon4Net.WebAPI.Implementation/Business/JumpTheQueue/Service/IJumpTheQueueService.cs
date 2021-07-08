@@ -44,18 +44,18 @@ namespace Devon4Net.WebAPI.Implementation.Business.JumpTheQueue.Service
         /// Decrease number of customers of the queue and update the queue.
         /// </summary>
         /// <param name="queueId">id of the queue to decrease customer.</param>
-        public Task DecreaseQueueCustomer(AccessCode access);
+        public Task DecreaseQueueCustomer(AccessCode accessCode);
         /// <summary>
         /// Increase number of customers of the queue and update the queue.
         /// </summary>
         /// <param name="queueId">id of the queue to increase customer.</param>
-        public Task IncreaseQueueCustomer(AccessCode access);
+        public Task IncreaseQueueCustomer(AccessCode accessCode);
         #endregion
 
         #region AccessCode
         Task<IList<AccessCode>> GetAccessCodes(Expression<Func<AccessCode, bool>> predicate = null);
         Task DeleteAccessCodeById(int accessCodeId);
-        Task<AccessCode> CreateAccessCode(AccessCodeCmd accessCode);
+        Task<AccessCode> CreateAccessCode(AccessCodeCmd acessCodeCmd);
         #endregion
     }
 }
